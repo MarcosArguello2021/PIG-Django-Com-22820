@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand">Logo img(agregar tag)</a>
+    <button class="navbar-toggler" data-target="#menu-hamburg" data-toggle="collapse" aria-controls="menu-hamburg" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="menu-hamburg" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item active"> # ORIGINAL!!!
+                <a class="nav-link" href="#">Vestimenta <span class="sr-only">(current)</span></a>
+            </li> -->
+            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'vestimenta' %}">VESTIMENTA</a>
+            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'calzado' %}">CALZADO</a>
+            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'accesorios' %}">ACCESORIOS</a>
+            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'suplementos' %}">SUPLEMENTOS</a>
+            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'contacto' %}">CONTACTO</a>
+        </ul>
+    </div>
+</nav>
