@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Vestimenta{% endblock %}
+{% block content %}
+
+{% for r in ropa %}
+    
+<div class="card bg-dark text-white">
+    <a href="link a producto">
+        {% load static %}
+        <img class="card-img" src="{% static 'ruta/ropa.jpg' %}" alt="ropa-img">
+        <div class="card-img-overlay">
+            <h5 class="card-title">Nombre prenda</h5>
+            <p class="card-text">precio</p>
+            <p class="card-text">extra info (sexo,colores,estilo,etc)</p>
+        </div>
+    </a>
+</div>
+
+{% endfor %}
+{% endblock  %}
