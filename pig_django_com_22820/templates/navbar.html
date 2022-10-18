@@ -6,14 +6,22 @@
     </button>
     <div class="collapse navbar-collapse" id="menuHamburg">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active"> # ORIGINAL!!!
-                <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'vestimenta' %}">VESTIMENTA</a>
+            <li class="nav-item {% if 'vestimenta' in request.path %}active{% endif %}">
+                <a class="nav-link " href="{% url 'vestimenta' %}">VESTIMENTA</a>
             </li>
             <!-- https://getbootstrap.com/docs/4.0/components/navbar/ -->
-            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'calzado' %}">CALZADO</a>
-            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'accesorios' %}">ACCESORIOS</a>
-            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'suplementos' %}">SUPLEMENTOS</a>
-            <a class="nav-item nav-link {% if 'vestimenta' in request.path %}active{% endif %}" href="{% url 'contacto' %}">CONTACTO</a>
+            <li class="nav-item {% if 'calzado' in request.path %}active{% endif %}">
+                <a class="nav-link " href="{% url 'calzado' %}">CALZADO</a>
+            </li>
+            <li class="nav-item {% if 'accesorios' in request.path %}active{% endif %}">
+                <a class="nav-link " href="{% url 'accesorios' %}">ACCESORIOS</a>
+            </li>
+            <li class="nav-item {% if 'suplementos' in request.path %}active{% endif %}">
+                <a class="nav-link" href="{% url 'suplementos' %}">SUPLEMENTOS</a>
+            </li>
+            <li class="nav-item {% if 'contacto' in request.path %}active{% endif %}">
+                <a class="nav-link" href="{% url 'contacto' %}">CONTACTO</a>
+            </li>
         </ul>
     </div>
 </nav>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Calzado{% endblock %}
+{% block content %}
+
+{% for s in suplementos %}
+    
+<div class="card bg-dark text-white">
+    <a href="link a producto">
+        {% load static %}
+        <img class="card-img" src="{% static 'ruta/{{s.nombre}}' %}" alt="suplemento-img">
+        <div class="card-img-overlay">
+            <h5 class="card-title">{{s.nombre}}</h5>
+            <p class="card-text">{{s.precio}}</p>
+            <p class="card-text">{{s.info}}(sexo,colores,estilo,etc)</p>
+        </div>
+    </a>
+</div>
+
+{% endfor %}
+{% endblock  %}

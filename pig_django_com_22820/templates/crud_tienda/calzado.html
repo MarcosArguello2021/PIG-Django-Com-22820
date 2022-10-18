@@ -7,11 +7,11 @@
 <div class="card bg-dark text-white">
     <a href="link a producto">
         {% load static %}
-        <img class="card-img" src="{% static 'ruta/calzado.jpg' %}" alt="calzado-img">
+        <img class="card-img" src="{% static 'ruta/{{c.nombre}}' %}" alt="calzado-img">
         <div class="card-img-overlay">
-            <h5 class="card-title">Nombre calzado</h5>
-            <p class="card-text">precio</p>
-            <p class="card-text">extra info (sexo,colores,estilo,etc)</p>
+            <h5 class="card-title">{{c.nombre}}</h5>
+            <p class="card-text">{{c.precio}}</p>
+            <p class="card-text">{{c.info}}(sexo,colores,estilo,etc)</p>
         </div>
     </a>
 </div>
