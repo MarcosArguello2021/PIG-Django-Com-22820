@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from crud_tienda.forms import FormContacto
 
 # Create your views here.
@@ -27,4 +27,19 @@ def suplementos(request):
 
 def contacto(request):
     contact = FormContacto()
+    if request.method == 'POST':
+        form = FormContacto(request.POST)
+        if form.is_valid():
+            email = EmailMessage(
+                "Tienda: Nuevo mensaje", # Asunto
+                f"De {contact.nombre} <{contact.mail}>\n\nEscribió:\n\n{contact.mensaje}",# Cuerpo
+                EMAIL_HOST_USER, # Email de origen
+                ['ivandariomunioz@gmail.com']# Email de destino
+                reply_to=[contact.email]# Email de respuesta
+            )
+            try:
+                email.send()
+                return redirect('home')
+            except:
+                algo
     return render(request, "crud_tienda/contacto.html",{"contact":contact})
