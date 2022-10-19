@@ -34,7 +34,7 @@ def contacto(request):
                 "Tienda: Nuevo mensaje", # Asunto
                 f"De {contact.nombre} <{contact.mail}>\n\nEscribió:\n\n{contact.mensaje}",# Cuerpo
                 EMAIL_HOST_USER, # Email de origen
-                ['ivandariomunioz@gmail.com']# Email de destino
+                ['ivandariomunioz@gmail.com'],# Email de destino
                 reply_to=[contact.email]# Email de respuesta
             )
             try:
