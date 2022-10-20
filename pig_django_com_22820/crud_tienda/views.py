@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
 from crud_tienda.forms import FormContacto
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 
 # Create your views here.
@@ -37,19 +37,27 @@ def contacto(request):
         mensaje = request.POST['mensaje']
         if contact.is_valid():
             # enviamos el email
-            # email = EmailMessage(
+            email = EmailMessage(
+                "Tienda: Nuevo mensaje",                            # Asunto
+                f"De {nombre} <{mail}>\n\nEscribió:\n\n{mensaje}",  # Cuerpo
+                EMAIL_HOST_USER,                                    # Email de origen
+                ['ivanmunoz87_14@hotmail.com'],                     # Email donde llega la respuesta
+                reply_to=[mail]              # responder a...
+            )
+            print(email)
+            try:
+                email.send()
+                return redirect('home')
+            except:
+                raise ValueError("Ocurrió un error...")
+                return redirect('home') # POR AHORA SOLOS REDIRIGIMOS
+
+            # send_mail(
             #     "Tienda: Nuevo mensaje",                                                        # Asunto
             #     f"De {nombre} <{mail}>\n\nEscribió:\n\n{mensaje}",      # Cuerpo
-            #     mail,                                                                   # Email de origen, from  (default = EMAIL_HOST_USER,)
-            #     ['ivandariomunioz@gmail.com'],                                                  # Email de destino, to
-            #     reply_to=[mail]                                                                # Email de respuesta
+            #     EMAIL_HOST_USER,                                                                   # Email de origen, from  (default = EMAIL_HOST_USER,)
+            #     ['ivandariomunioz@gmail.com'],
+            #     fail_silently=False,
             # )
-            # print(email)
-            # try:
-            #     email.send()
-            #     return redirect('home')
-            # except:
-            #     raise ValueError("Ocurrió un error...")
-            return redirect('home') # POR AHORA SOLOS REDIRIGIMOS
     else:
         return render(request, "crud_tienda/contacto.html",{"contact":contact})
