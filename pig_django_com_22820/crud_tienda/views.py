@@ -15,8 +15,13 @@ def vestimenta(request):
     return render(request,"crud_tienda/vestimenta.html",{"ropa":ropa})
 
 def calzado(request):
-    zapas="Calzado.objects.all().order_by('nombre_calzado')"
-    return render(request,"crud_tienda/calzado.html",{"calzado":zapas})
+    if request.method == 'POST':
+        categoria = request.POST['categoria']
+        talle = request.POST['talle']
+        color = request.POST['color']
+    else:
+        query_set="Calzado.objects.all().order_by('nombre_calzado')"
+    return render(request,"crud_tienda/calzado.html",{"calzado":query_set})
 
 def accesorios(request):
     acces="Accesorios.objects.all().order_by('nombre_accesorios')"
@@ -41,23 +46,14 @@ def contacto(request):
                 "Tienda: Nuevo mensaje",                            # Asunto
                 f"De {nombre} <{mail}>\n\nEscribió:\n\n{mensaje}",  # Cuerpo
                 EMAIL_HOST_USER,                                    # Email de origen
-                ['ivanmunoz87_14@hotmail.com'],                     # Email donde llega la respuesta
-                reply_to=[mail]              # responder a...
+                ['ivandariomunioz@gmail.com'],                      # Email donde llega la respuesta
+                reply_to=[mail]                                     # responder a...
             )
             print(email)
             try:
                 email.send()
                 return redirect('home')
             except:
-                raise ValueError("Ocurrió un error...")
-                return redirect('home') # POR AHORA SOLOS REDIRIGIMOS
-
-            # send_mail(
-            #     "Tienda: Nuevo mensaje",                                                        # Asunto
-            #     f"De {nombre} <{mail}>\n\nEscribió:\n\n{mensaje}",      # Cuerpo
-            #     EMAIL_HOST_USER,                                                                   # Email de origen, from  (default = EMAIL_HOST_USER,)
-            #     ['ivandariomunioz@gmail.com'],
-            #     fail_silently=False,
-            # )
+                raise ValueError("Ocurrió un error...") # aca habría que crear una excepcion o mensaje de error propio y que continúe
     else:
         return render(request, "crud_tienda/contacto.html",{"contact":contact})

@@ -1,9 +1,29 @@
 {% extends 'base.html' %}
 {% block title %}Calzado{% endblock %}
-{% block content %}
+{% block filters %}
+<div class="dropdown">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filtros
+    </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <div class="btn-group dropright">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            categoria
+            </button>
+            <div class="dropdown-menu">
+                <option class="dropdown-item" value="mujer">mujer</option>
+                <option class="dropdown-item" value="hombre">hombre</option>
+                <option class="dropdown-item" value="nino">nino</option>
+            </div>
+        </div>
+        <button class="dropdown-item" type="button">talle</button>
+        <button class="dropdown-item" type="button">color</button>
+    </div>
+</div>
+{% endblock %}
 
+{% block content %}
 {% for c in calzado %}
-    
 <div class="card bg-dark text-white">
     <a href="link a producto">
         {% load static %}
@@ -11,10 +31,9 @@
         <div class="card-img-overlay">
             <h5 class="card-title">{{c.nombre}}</h5>
             <p class="card-text">{{c.precio}}</p>
-            <p class="card-text">{{c.info}}(sexo,colores,estilo,etc)</p>
+            <p class="card-text">{{c.info}}</p>
         </div>
     </a>
 </div>
-
 {% endfor %}
-{% endblock  %}
+{% endblock %}
