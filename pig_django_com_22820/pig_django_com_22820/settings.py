@@ -143,11 +143,3 @@ EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = email_settings['EMAIL_PORT']
 EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
-
-# EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'vineria.marcos@gmail.com'
-# EMAIL_HOST_PASSWORD = 'Fun152040'
-# EMAIL_PORT = 587
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
