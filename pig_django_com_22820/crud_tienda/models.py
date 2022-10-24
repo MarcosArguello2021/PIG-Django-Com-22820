@@ -1,5 +1,4 @@
-from random import choices
-from statistics import mode
+from tabnanny import verbose
 from django.db import models
 
 # Create your models here.
@@ -28,11 +27,18 @@ CATEGORIAS = (
 
 
 class Item(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, verbose_name = 'Producto')
     precio = models.FloatField()
-    foto= models.ImageField(upload_to='calzado')
-    talle = models.CharField(max_length=2, choices=TALLES)
+    foto= models.ImageField(upload_to='productos')
+    talle = models.CharField(max_length=2, choices=TALLES, blank=True, null=True)
     info = models.CharField(max_length=250)
     stock = models.IntegerField()
     categoria = models.CharField(max_length=2,choices=CATEGORIAS)
-    sexo = models.CharField(max_length=1,choices=SEXO)
+    sexo = models.CharField(max_length=1,choices=SEXO, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Item'
+        verbose_name_plural = 'Items'
+        ordering = ['nombre'] # será ascendente
+    def __str__(self):
+        return self.nombre

@@ -1,5 +1,6 @@
-{% extends 'base.html' %}
-{% block title %}Calzado{% endblock %}
+{% extends 'crud_tienda/index.html' %}
+{% block title %}{{categoria}}{% endblock %}
+
 {% block filters %}
 <div class="dropdown">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -20,20 +21,4 @@
         <button class="dropdown-item" type="button">color</button>
     </div>
 </div>
-{% endblock %}
-
-{% block content %}
-{% for c in calzado %}
-<div class="card bg-dark text-white">
-    <a href="link a producto">
-        {% load static %}
-        <img class="card-img" src="{% static 'ruta/{{c.nombre}}' %}" alt="calzado-img">
-        <div class="card-img-overlay">
-            <h5 class="card-title">{{c.nombre}}</h5>
-            <p class="card-text">{{c.precio}}</p>
-            <p class="card-text">{{c.info}}</p>
-        </div>
-    </a>
-</div>
-{% endfor %}
 {% endblock %}

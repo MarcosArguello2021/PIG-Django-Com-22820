@@ -1,5 +1,6 @@
-from datetime import datetime
+from django.template import loader
 from django.shortcuts import render, redirect
+from crud_tienda.models import Item
 from crud_tienda.forms import FormContacto
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
@@ -7,12 +8,13 @@ from pig_django_com_22820.settings import EMAIL_HOST_USER
 # Create your views here.
 def index(request):
     """ esto es la explicacion"""
-    fecha=datetime.now().strftime("%D - %H:%M:%S")
-    return render(request, "crud_tienda/index.html",{"fecha_now":fecha})
+    productos = Item.objects.all()
+    return render(request, "crud_tienda/index.html",{"productos":productos})
 
 def vestimenta(request):
     ropa="Ropa.objects.all().order_by('nombre_ropa')"
     return render(request,"crud_tienda/vestimenta.html",{"ropa":ropa})
+
 
 def calzado(request):
     if request.method == 'POST':
@@ -20,8 +22,10 @@ def calzado(request):
         talle = request.POST['talle']
         color = request.POST['color']
     else:
-        query_set="Calzado.objects.all().order_by('nombre_calzado')"
-    return render(request,"crud_tienda/calzado.html",{"calzado":query_set})
+        categoria = "Calzado"
+        productos=Item.objects.filter(categoria__icontains="CA").order_by('nombre')
+        print(productos)
+    return render(request,"crud_tienda/calzado.html",{"productos":productos,"categoria":categoria})
 
 def accesorios(request):
     acces="Accesorios.objects.all().order_by('nombre_accesorios')"

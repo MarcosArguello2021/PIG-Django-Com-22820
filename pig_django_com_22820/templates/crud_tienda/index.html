@@ -2,6 +2,16 @@
 
 {% block content %}
     
-{{fecha_now}}
-
+{% for p in productos %}
+<div class="card bg-dark text-white">
+    <a href="link a producto">
+        <img width="100px" class="card-img" src="{{p.foto.url}}" alt="{{p.nombre}} {{p.sexo}}">
+        <div class="card-img-overlay">
+            <h5 class="card-title">{{p.nombre}}</h5>
+            <p class="card-text">{{p.precio}}</p>
+            <p class="card-text">{{p.info}}</p>
+        </div>
+    </a>
+</div>
+{% endfor %}
 {% endblock  %}
