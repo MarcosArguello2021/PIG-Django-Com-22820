@@ -7,14 +7,9 @@ from pig_django_com_22820.settings import EMAIL_HOST_USER
 
 # Create your views here.
 def index(request):
-    """ esto es la explicacion"""
+    """ esto es la explicación"""
     productos = Item.objects.all()
     return render(request, "crud_tienda/index.html",{"productos":productos})
-
-def vestimenta(request):
-    ropa="Ropa.objects.all().order_by('nombre_ropa')"
-    return render(request,"crud_tienda/vestimenta.html",{"ropa":ropa})
-
 
 def calzado(request):
     if request.method == 'POST':
@@ -26,6 +21,11 @@ def calzado(request):
         productos=Item.objects.filter(categoria__icontains="CA").order_by('nombre')
         print(productos)
     return render(request,"crud_tienda/calzado.html",{"productos":productos,"categoria":categoria})
+
+
+def vestimenta(request):
+    ropa="Ropa.objects.all().order_by('nombre_ropa')"
+    return render(request,"crud_tienda/vestimenta.html",{"ropa":ropa})
 
 def accesorios(request):
     acces="Accesorios.objects.all().order_by('nombre_accesorios')"
