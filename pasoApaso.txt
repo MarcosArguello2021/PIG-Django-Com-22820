@@ -33,8 +33,8 @@ HTML
 - modifico el base, agrego el block breadcrumbs que funciona si no estamos en la home o en contacto.
  y es distinto para cada categoria o producto (falta terminar el de producto)
 - falta filters
--  block content para cada categoria ahora hereda de index
-
+- block content para cada categoria ahora hereda de index
+- no puedo hacer funcionar favicon
 
 URLS
 - falta revisar y actualizar

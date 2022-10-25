@@ -1,4 +1,4 @@
-from django.template import loader
+# from django.template import loader
 from django.shortcuts import render, redirect
 from crud_tienda.models import Item
 from crud_tienda.forms import FormContacto
@@ -10,6 +10,7 @@ def index(request):
     """ esto es la explicación"""
     productos = Item.objects.all()
     return render(request, "crud_tienda/index.html",{"productos":productos})
+
 
 def calzado(request):
     if request.method == 'POST':
