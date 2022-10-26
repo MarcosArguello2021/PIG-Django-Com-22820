@@ -1,17 +1,27 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} 
 
-{% block content %}
-    
-{% for p in productos %}
-<div class="card bg-light text-white">
-    <a href="link a producto">
-        <img width="100px" class="card-img" src="{{p.foto.url}}" alt="{{p.nombre}} {{p.sexo}}">
-        <div class="card-img-overlay">
-            <h5 class="card-title">{{p.nombre}}</h5>
-            <p class="card-text">{{p.precio}}</p>
-            <p class="card-text">{{p.info}}</p>
+<div class="itemListContainer p-4">
+  <h2 class="title">Nuestro catálogo de productos</h2>
+  <section>
+    <div class="containerList">
+      <div class="items align-content-center">
+        <div class="items">
+          <div class="itemList">
+            {% for p in productos %}
+            <div class="item">
+              <a href="#"><img src="{{p.foto.url}}" class="img-responsive" /></a
+              ><a class="link" href="#">
+                <h2 class="nombre">{{p.nombre}}</h2>
+              </a>
+              <h4>$ {{ p.precio|floatformat:2}}</h4>
+              <a href="#"><button class="btn btn-secondary">Ver Más</button></a>
+            </div>
+            {% endfor %}
+          </div>
         </div>
-    </a>
+      </div>
+    </div>
+  </section>
 </div>
-{% endfor %}
-{% endblock  %}
+
+ {% endblock %} 

@@ -147,3 +147,5 @@ EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = email_settings['EMAIL_PORT']
 EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
+
+USE_THOUSAND_SEPARATOR = True

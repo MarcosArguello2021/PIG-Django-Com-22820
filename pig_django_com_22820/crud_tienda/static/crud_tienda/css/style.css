@@ -1,0 +1,57 @@
+.items .itemList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(80%, 16em), 1fr));
+    border-radius: 10px;
+    padding: 30px 16px;
+    gap: 1em;
+}
+
+
+.item {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 1em 0;
+}
+
+.item .img-responsive {
+    width: 100%;
+    padding: 1em, 0;
+}
+
+.item .link {
+    padding: 0.5em;
+    color: rgb(24, 24, 65);
+    text-decoration: none;
+}
+
+.item .nombre {
+    font-size: 1.2em;
+}
+
+.item .variedad {
+    padding: 0.5em;
+    font-size: 1.2em;
+    color: rgb(24, 24, 65);
+}
+
+.items .itemList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(80%, 16em), 1fr));
+    border-radius: 10px;
+    padding: 30px 16px;
+    gap: 1em;
+    align-items: center;
+}
+
+.itemListContainer {
+    text-align: center;
+}
+
+.itemListContainer .title {
+    padding: 0.875em;
+}
+
+.itemListContainer .containerList {
+    display: block;
+    box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    text-align: center;
+}
