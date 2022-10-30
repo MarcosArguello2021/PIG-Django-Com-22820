@@ -41,8 +41,12 @@ def accesorios(request):
 
 
 def suplementos(request):
-    suplem = "Suplementos.objects.all().order_by('nombre_suplementos')"
-    return render(request, "crud_tienda/suplementos.html", {"suplementos": suplem})
+    if request.method == 'POST':
+        categoria = request.POST['categoria']
+    else:
+        categoria = "Sumplementos"
+        productos = Item.objects.filter(categoria__icontains="SU").order_by('nombre')
+    return render(request, "crud_tienda/suplementos.html", {"productos": productos, "categoria": categoria})
 
 
 def contacto(request):
