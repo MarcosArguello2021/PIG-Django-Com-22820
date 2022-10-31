@@ -29,6 +29,8 @@ SUBCATEGORIA = (
     ('BS', 'Bermudas & Shorts'),
     ('BC', 'Buzos & Camperas'),
     ('PC', 'Pantalones & Calzas'),
+    ('MO', 'Moda'),
+    ('EN', 'Entenamiento'),
 )
 
 class Item(models.Model):

@@ -1,20 +1,20 @@
-{% extends 'base.html' %}
-{% block title %}Calzado{% endblock %}
-{% block content %}
+{% extends 'crud_tienda/index.html' %}
+{% block title %}{{categoria}}{% endblock %}
 
-{% for a in accesorios %}
-    
-<div class="card bg-dark text-white">
-    <a href="link a producto">
-        {% load static %}
-        <img class="card-img" src="{% static 'ruta/{{a.nombre}}' %}" alt="accesorio-img">
-        <div class="card-img-overlay">
-            <h5 class="card-title">{{a.nombre}}</h5>
-            <p class="card-text">{{a.precio}}</p>
-            <p class="card-text">{{a.info}}(sexo,colores,estilo,etc)</p>
-        </div>
+{% block filters %}
+<div class="dropdown">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filtros
     </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <div class="btn-group dropright">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            categoria
+            </button>
+            
+        </div>
+        <button class="dropdown-item" type="button">Moda</button>
+        <button class="dropdown-item" type="button">Entrenamiento</button>
+    </div>
 </div>
-
-{% endfor %}
-{% endblock  %}
+{% endblock %}

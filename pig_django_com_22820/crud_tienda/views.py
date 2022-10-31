@@ -36,8 +36,13 @@ def vestimenta(request):
 
 
 def accesorios(request):
-    acces = "Accesorios.objects.all().order_by('nombre_accesorios')"
-    return render(request, "crud_tienda/accesorios.html", {"accesorios": acces})
+    if request.method == 'POST':
+        categoria = request.POST['categoria']
+        
+    else:
+        categoria = "Accesorios"
+        productos = Item.objects.filter(categoria__icontains="AC").order_by('nombre')
+    return render(request, "crud_tienda/accesorios.html", {"productos": productos, "categoria": categoria})
 
 
 def suplementos(request):
