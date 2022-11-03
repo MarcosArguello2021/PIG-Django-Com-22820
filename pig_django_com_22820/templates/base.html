@@ -17,19 +17,19 @@
     {% include 'navbar.html' %}
     <div class="container">
         {% if request.resolver_match.url_name != "home" and request.resolver_match.url_name != "contacto" %}
-        {% block breadcrumbs %}
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                {% if request.resolver_match.url_name != "calzado" and request.resolver_match.url_name != "vestimenta" and request.resolver_match.url_name != "accesorios" and request.resolver_match.url_name != "suplementos" %}
-                <li class="breadcrumb-item"><a href="{% url '{{p.categoria}}' %}">{{p.categoria|capfirst}}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{p.nombre}}</li>
-                {% else %}
-                <li class="breadcrumb-item active" aria-current="page">{{categoria}}</li>
-                {% endif %}
-            </ol>
-        </nav>
-        {% endblock %}
+            {% block breadcrumbs %}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    {% if request.resolver_match.url_name != "calzado" and request.resolver_match.url_name != "vestimenta" and request.resolver_match.url_name != "accesorios" and request.resolver_match.url_name != "suplementos" %}
+                    <li class="breadcrumb-item"><a href="{% url '{{p.categoria}}' %}">{{p.categoria|capfirst}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{p.nombre}}</li>
+                    {% else %}
+                    <li class="breadcrumb-item active" aria-current="page">{{categoria}}</li>
+                    {% endif %}
+                </ol>
+            </nav>
+            {% endblock %}
         {% endif %}
         <div class="container">
             {% block filters %}{% endblock %}
