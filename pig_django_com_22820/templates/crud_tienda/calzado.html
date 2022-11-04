@@ -2,54 +2,30 @@
 {% block title %}{{categoria}}{% endblock %}
 
 {% block filters %}
-<div class="dropdown" style="position:relative">
-    <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Filtross <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-        <li>
-            <a class="trigger right-caret">Level 1</a>
-            <ul class="dropdown-menu sub-menu">
-                <li><a href="#">Level 2</a></li>
-                <li>
-                    <a class="trigger right-caret">Level 2</a>
-                    <ul class="dropdown-menu sub-menu">
-                        <li><a href="#">Level 3</a></li>
-                        <li><a href="#">Level 3</a></li>
-                        <li>
-                            <a class="trigger right-caret">Level 3</a>
-                            <ul class="dropdown-menu sub-menu">
-                                <li><a href="#">Level 4</a></li>
-                                <li><a href="#">Level 4</a></li>
-                                <li><a href="#">Level 4</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#">Level 2</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Level 1</a></li>
-        <li><a href="#">Level 1</a></li>
-    </ul>
-</div>
-<div class="dropdown" style="position:relative">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Filtros
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+      data-toggle="dropdown" aria-expanded="false">
+      Filtros
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="dropright">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="droprightMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                categoria
-            </button>
-            <div class="dropdown-menu" aria-labelledby="droprightMenuButton">
-                <a class="dropdown-item" href="#">mujer</a>
-                <a class="dropdown-item" href="#">hombre</a>
-            </div>
-        </div>
-        <a class="dropdown-item" href="#">talle</a>
-        <a class="dropdown-item" href="#">color</a>
-    </div>
-</div>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li>
+          <a class="dropdown-item" href="#">
+            Categoria &raquo;
+          </a>
+          <ul class="dropdown-menu dropdown-submenu">
+            <li>
+              <a class="dropdown-item" href="#">Mujer</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Hombre</a>
+            </li>
+          </ul>
+        </li>
+      <li><a class="dropdown-item" href="#">Color</a></li>
+      <li>
+        <a class="dropdown-item" href="#">Talle</a>
+      </li>
+    </ul>
+  </div>
 
 {% endblock %}

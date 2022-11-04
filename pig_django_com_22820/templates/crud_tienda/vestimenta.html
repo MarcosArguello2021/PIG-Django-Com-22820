@@ -3,20 +3,27 @@
 
 {% block filters %}
 <div class="dropdown">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+      data-toggle="dropdown" aria-expanded="false">
       Filtros
-    </a>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <div class="btn-group dropright">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            categoria
-            </button>
-            <div class="dropdown-menu">
-                <option class="dropdown-item" value="mujer">mujer</option>
-                <option class="dropdown-item" value="hombre">hombre</option>
-            </div>
-        </div>
-        <button class="dropdown-item" type="button">talle</button>
-    </div>
-</div>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li>
+          <a class="dropdown-item" href="#">
+            Categoria &raquo;
+          </a>
+          <ul class="dropdown-menu dropdown-submenu">
+            <li>
+              <a class="dropdown-item" href="#">Mujer</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Hombre</a>
+            </li>
+          </ul>
+        </li>
+      <li><a class="dropdown-item" href="#">Color</a></li>
+      <li><a class="dropdown-item" href="#">Tipo de prenda</a></li>
+      <li><a class="dropdown-item" href="#">Talle</a></li>
+    </ul>
+  </div>
 {% endblock %}
