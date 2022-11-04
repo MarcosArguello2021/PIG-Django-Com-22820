@@ -11,3 +11,6 @@ EJEMPLOS DE PROYECTO
 DROPDOWN MENU
     https://mdbootstrap.com/docs/standard/extended/dropdown-multilevel/#
     https://getbootstrap.com/docs/4.0/components/dropdowns/
+
+QUERYSETS
+    https://docs.djangoproject.com/en/4.1/topics/db/queries/

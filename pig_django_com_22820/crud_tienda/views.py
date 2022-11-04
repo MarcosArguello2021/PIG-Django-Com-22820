@@ -10,17 +10,22 @@ from pig_django_com_22820.settings import EMAIL_HOST_USER
 
 def index(request):
     """ esto es la explicación"""
-    productos = Item.objects.all()
+    productos = Item.objects.all().order_by('?')[:10]
     return render(request, "crud_tienda/index.html", {"productos": productos})
 
 
-def calzado(request):
+def calzado(request,sexo=None):
+    categoria = "Calzado"
     if request.method == 'POST':
         categoria = request.POST['categoria']
         talle = request.POST['talle']
+    elif sexo:
+        if sexo == 'M':
+            productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
+        elif sexo == 'H':
+            productos = Item.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
     else:
-        categoria = "Calzado"
-        productos = Item.objects.filter(categoria__icontains="CA").order_by('nombre')
+        productos = Item.objects.filter(categoria__contains="CA").order_by('nombre')
     return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria})
 
 
