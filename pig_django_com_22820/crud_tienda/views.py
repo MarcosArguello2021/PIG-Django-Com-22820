@@ -19,13 +19,13 @@ def calzado(request,sexo=None):
     if request.method == 'POST':
         categoria = request.POST['categoria']
         talle = request.POST['talle']
-    elif sexo:
+    elif request.method == 'GET':
         if sexo == 'M':
             productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
         elif sexo == 'H':
             productos = Item.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
-    else:
-        productos = Item.objects.filter(categoria__contains="CA").order_by('nombre')
+        else:
+            productos = Item.objects.filter(categoria__contains="CA").order_by('nombre')
     return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria})
 
 

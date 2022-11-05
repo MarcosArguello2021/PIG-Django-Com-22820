@@ -1,5 +1,22 @@
 <!-- https://getbootstrap.com/docs/4.0/components/navbar/ -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<header class="header" id="navBarId">
+    {% load static %}
+    <nav class="navBar">
+        <a href="{% url 'home' %}" class="logo nav-link"><img src="{% static 'crud_tienda/img/logo.png' %}" height="70"></img></a></li>
+        <button class="nav-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="nav-menu">
+            <li class="nav-menu-item {% if 'vestimenta' in request.path %}active{% endif %}" ><a class="nav-menu-links nav-links" href="{% url 'vestimenta' %}">VESTIMENTA</a></li>
+            <li class="nav-menu-item {% if 'calzado' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'calzado' %}">CALZADO</a></li>
+            <li class="nav-menu-item {% if 'accesorios' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'accesorios' %}">ACCESORIOS</a></li>
+            <li class="nav-menu-item {% if 'suplementos' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'suplementos' %}">SUPLEMENTOS</a></li>
+            <li class="nav-menu-item {% if 'contacto' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'contacto' %}">CONTACTO</a></li>
+        </ul>
+    </nav>
+</header>
+
+{% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     {% load static %}
     <a class="navbar-brand" href="{% url 'home' %}"><img width="80" src="{% static 'crud_tienda/img/logo.png' %}" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuHamburg" aria-controls="menuHamburg" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,4 +41,4 @@
             </li>
         </ul>
     </div>
-</nav>
+</nav> {% endcomment %}
