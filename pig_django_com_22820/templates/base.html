@@ -18,14 +18,14 @@
 <body>
     {% include 'navbar.html' %}
     <div class="container ruta-productos">
-        {% if request.resolver_match.url_name != "home" and request.resolver_match.url_name != "contacto" %}
+        {% if request.resolver_match.url_name != "Home" and request.resolver_match.url_name != "Contacto" %}
             {% block breadcrumbs %}
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                    {% if request.resolver_match.url_name != "calzado" and request.resolver_match.url_name != "vestimenta" and request.resolver_match.url_name != "accesorios" and request.resolver_match.url_name != "suplementos" %}
-                    <li class="breadcrumb-item"><a href="{% url '{{p.categoria}}' %}">{{p.categoria|capfirst}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{p.nombre}}</li>
+                    <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
+                    {% if request.resolver_match.url_name != "Calzado" and request.resolver_match.url_name != "Vestimenta" and request.resolver_match.url_name != "Accesorios" and request.resolver_match.url_name != "Suplementos" %}
+                    <li class="breadcrumb-item"><a href="{% url categoria %}">{{categoria|capfirst}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{productos}}</li>
                     {% else %}
                     <li class="breadcrumb-item active" aria-current="page">{{categoria}}</li>
                     {% endif %}

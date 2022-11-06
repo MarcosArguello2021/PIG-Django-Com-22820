@@ -10,21 +10,29 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
           <a class="dropdown-item" href="#">
-            Categoria &raquo;
+            Categoria  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
             <li>
-              <a class="dropdown-item" href="{% url 'calzado' %}?sexo=M">Mujer</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}M">Mujer</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'calzado' %}?sexo=H">Hombre</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}H">Hombre</a>
             </li>
           </ul>
         </li>
-      <li><a class="dropdown-item" href="#">Color</a></li>
-      <li>
-        <a class="dropdown-item" href="#">Talle</a>
-      </li>
+        <li>
+          <a class="dropdown-item" href="#">
+            Talle  &raquo;
+          </a>
+          <ul class="dropdown-menu dropdown-submenu">
+            {% for t in talle %}
+            <li>
+              <a class="dropdown-item" href="{% url 'Calzado' %}?talle={{t}}">{{t}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
     </ul>
   </div>
 

@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 
 # Create your models here.
@@ -61,7 +60,7 @@ class Item(models.Model):
     precio = models.FloatField()
     foto = models.ImageField(upload_to='productos')
     categoria = models.CharField(max_length=2, choices=CATEGORIAS)
-    talle = models.CharField(max_length=2,choices=TALLESVES) #elif categoria == 'CA': if sexo == 'M': choices == TALLESZAPMU elif sexo == 'H': choices == TALLESZAPHO), blank=True, null=True)
+    talle = models.CharField(max_length=2,choices=TALLESVES,blank=True, null=True) #elif categoria == 'CA': if sexo == 'M': choices == TALLESZAPMU elif sexo == 'H': choices == TALLESZAPHO), blank=True, null=True)
     info = models.CharField(max_length=250)
     stock = models.IntegerField()
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)

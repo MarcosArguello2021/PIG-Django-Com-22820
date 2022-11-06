@@ -2,42 +2,42 @@
 <header class="header" id="navBarId">
     {% load static %}
     <nav class="navBar">
-        <a href="{% url 'home' %}" class="logo nav-link"><img src="{% static 'crud_tienda/img/logo.png' %}" height="70"></img></a></li>
+        <a href="{% url 'Home' %}" class="logo nav-link"><img src="{% static 'crud_tienda/img/logo.png' %}" height="70"></img></a></li>
         <button class="nav-toggle" aria-label="Abrir menú">
             <i class="fa-solid fa-bars"></i>
         </button>
         <ul class="nav-menu">
-            <li class="nav-menu-item {% if 'vestimenta' in request.path %}active{% endif %}" ><a class="nav-menu-links nav-links" href="{% url 'vestimenta' %}">VESTIMENTA</a></li>
-            <li class="nav-menu-item {% if 'calzado' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'calzado' %}">CALZADO</a></li>
-            <li class="nav-menu-item {% if 'accesorios' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'accesorios' %}">ACCESORIOS</a></li>
-            <li class="nav-menu-item {% if 'suplementos' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'suplementos' %}">SUPLEMENTOS</a></li>
-            <li class="nav-menu-item {% if 'contacto' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'contacto' %}">CONTACTO</a></li>
+            <li class="nav-menu-item {% if 'Vestimenta' in request.path %}active{% endif %}" ><a class="nav-menu-links nav-links" href="{% url 'Vestimenta' %}">VESTIMENTA</a></li>
+            <li class="nav-menu-item {% if 'Calzado' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'Calzado' %}">CALZADO</a></li>
+            <li class="nav-menu-item {% if 'Accesorios' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'Accesorios' %}">ACCESORIOS</a></li>
+            <li class="nav-menu-item {% if 'Suplementos' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'Suplementos' %}">SUPLEMENTOS</a></li>
+            <li class="nav-menu-item {% if 'Contacto' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'Contacto' %}">CONTACTO</a></li>
         </ul>
     </nav>
 </header>
 
 {% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     {% load static %}
-    <a class="navbar-brand" href="{% url 'home' %}"><img width="80" src="{% static 'crud_tienda/img/logo.png' %}" alt="logo"></a>
+    <a class="navbar-brand" href="{% url 'Home' %}"><img width="80" src="{% static 'crud_tienda/img/logo.png' %}" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuHamburg" aria-controls="menuHamburg" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="menuHamburg">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item {% if 'vestimenta' in request.path %}active{% endif %}">
-                <a class="nav-link " href="{% url 'vestimenta' %}">VESTIMENTA</a>
+            <li class="nav-item {% if 'Vestimenta' in request.path %}active{% endif %}">
+                <a class="nav-link " href="{% url 'Vestimenta' %}">VESTIMENTA</a>
             </li>
-            <li class="nav-item {% if 'calzado' in request.path %}active{% endif %}">
-                <a class="nav-link " href="{% url 'calzado' %}">CALZADO</a>
+            <li class="nav-item {% if 'Calzado' in request.path %}active{% endif %}">
+                <a class="nav-link " href="{% url 'Calzado' %}">CALZADO</a>
             </li>
-            <li class="nav-item {% if 'accesorios' in request.path %}active{% endif %}">
-                <a class="nav-link " href="{% url 'accesorios' %}">ACCESORIOS</a>
+            <li class="nav-item {% if 'Accesorios' in request.path %}active{% endif %}">
+                <a class="nav-link " href="{% url 'Accesorios' %}">ACCESORIOS</a>
             </li>
-            <li class="nav-item {% if 'suplementos' in request.path %}active{% endif %}">
-                <a class="nav-link" href="{% url 'suplementos' %}">SUPLEMENTOS</a>
+            <li class="nav-item {% if 'Suplementos' in request.path %}active{% endif %}">
+                <a class="nav-link" href="{% url 'Suplementos' %}">SUPLEMENTOS</a>
             </li>
-            <li class="nav-item {% if 'contacto' in request.path %}active{% endif %}">
-                <a class="nav-link" href="{% url 'contacto' %}">CONTACTO</a>
+            <li class="nav-item {% if 'Contacto' in request.path %}active{% endif %}">
+                <a class="nav-link" href="{% url 'Contacto' %}">CONTACTO</a>
             </li>
         </ul>
     </div>

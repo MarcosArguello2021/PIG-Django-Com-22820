@@ -1,16 +1,16 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from django.conf import settings
 
 urlpatterns = [
-    path('', views.index ,name="home"),
-    path('vestimenta/', views.vestimenta,name='vestimenta'),
-    path('calzado/', views.calzado,name='calzado'),
-    # path('calzado/(?P<sexo>)', views.calzado,name='calzado'),
-    # path('calzado/<str:sexo>', views.calzado,name='calzado'),
-    path('accesorios/', views.accesorios,name='accesorios'),
-    path('suplementos/', views.suplementos,name='suplementos'),
-    path('contacto/',views.contacto, name="contacto"),
+    path('', views.index ,name="Home"),
+    path('vestimenta/', views.vestimenta,name='Vestimenta'),
+    path('calzado/', views.calzado,name='Calzado'),
+    path('calzado/<str:sexo>/', views.calzado,name='Calzado-sexo'),
+    # re_path(r'^calzado/(?P<sexo>[a-z]{,1})$', views.calzado,name='calzado-sexo'),
+    path('accesorios/', views.accesorios,name='Accesorios'),
+    path('suplementos/', views.suplementos,name='Suplementos'),
+    path('contacto/',views.contacto, name="Contacto"),
 ]
 
 if settings.DEBUG:
