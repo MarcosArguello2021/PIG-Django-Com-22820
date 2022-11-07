@@ -14,7 +14,7 @@ def index(request):
     return render(request, "crud_tienda/index.html", {"productos": productos})
 
 
-def calzado(request,sexo=None):
+def calzado(request,filtro=None):
     categoria = "Calzado"
     talle = (
     ('34.5(3.5 uk)'),
@@ -34,14 +34,16 @@ def calzado(request,sexo=None):
         categoria = request.POST['categoria']
         talle = request.POST['talle']
     elif request.method == 'GET':
-        print(sexo)
-        if sexo == 'M':
+        print(request.GET)
+        if filtro == 'Mujer':
             productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
-        elif sexo == 'H':
+        elif filtro == 'Hombre':
             productos = Item.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
+        elif filtro == request.GET:
+            print(filtro)
         else:
             productos = Item.objects.filter(categoria__contains="CA").order_by('nombre')
-    return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talle":talle})
+    return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talle":talle,"filtro":filtro})
 
 
 def vestimenta(request):

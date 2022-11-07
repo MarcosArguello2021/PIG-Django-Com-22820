@@ -25,7 +25,7 @@
                     <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
                     {% if request.resolver_match.url_name != "Calzado" and request.resolver_match.url_name != "Vestimenta" and request.resolver_match.url_name != "Accesorios" and request.resolver_match.url_name != "Suplementos" %}
                     <li class="breadcrumb-item"><a href="{% url categoria %}">{{categoria|capfirst}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{productos}}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{filtro}}</li>
                     {% else %}
                     <li class="breadcrumb-item active" aria-current="page">{{categoria}}</li>
                     {% endif %}
