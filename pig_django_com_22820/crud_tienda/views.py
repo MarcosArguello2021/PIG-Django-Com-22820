@@ -34,7 +34,11 @@ def calzado(request,filtro=None):
         categoria = request.POST['categoria']
         talle = request.POST['talle']
     elif request.method == 'GET':
+        filtro = request.GET
         print(request.GET)
+        if filtro == 'M' or filtro == 'H':
+            productos = Item.objects.filter(categoria__contains="CA",sexo=filtro).order_by('nombre')
+        elif
         if filtro == 'Mujer':
             productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
         elif filtro == 'Hombre':
