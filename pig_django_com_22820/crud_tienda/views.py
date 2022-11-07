@@ -1,6 +1,6 @@
 # from django.template import loader
 from django.shortcuts import render, redirect
-from crud_tienda.models import Item
+from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento
 from crud_tienda.forms import FormContacto
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
@@ -37,15 +37,15 @@ def calzado(request,filtro=None):
         dict = request.GET
         print(dict)
         if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-            productos = Item.objects.filter(categoria__contains="CA",sexo=dict['filtro']).order_by('nombre')
+            productos = Calzado.objects.filter(categoria__contains="CA",sexo=dict['filtro']).order_by('nombre')
         elif filtro != None:
-            productos = Item.objects.filter(categoria__contains="CA",talle=dict['filtro']).order_by('nombre')
+            productos = Calzado.objects.filter(categoria__contains="CA",talle=dict['filtro']).order_by('nombre')
         # if filtro == 'Mujer':
-        #     productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
+        #     productos = Calzado.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
         # elif filtro == 'Hombre':
-        #     productos = Item.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
+        #     productos = Calzado.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
         else:
-            productos = Item.objects.filter(categoria__contains="CA").order_by('nombre')
+            productos = Calzado.objects.filter(categoria__contains="CA").order_by('nombre')
     return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talle":talle,"filtro":filtro})
 
 
@@ -56,7 +56,7 @@ def vestimenta(request):
         
     else:
         categoria = "Vestimenta"
-        productos = Item.objects.filter(categoria__icontains="VM").order_by('nombre')
+        productos = Vestimenta.objects.filter(categoria__icontains="VM").order_by('nombre')
     return render(request, "crud_tienda/vestimenta.html", {"productos": productos, "categoria": categoria})
 
 
@@ -66,7 +66,7 @@ def accesorios(request):
         
     else:
         categoria = "Accesorios"
-        productos = Item.objects.filter(categoria__icontains="AC").order_by('nombre')
+        productos = Accesorio.objects.filter(categoria__icontains="AC").order_by('nombre')
     return render(request, "crud_tienda/accesorios.html", {"productos": productos, "categoria": categoria})
 
 
@@ -75,7 +75,7 @@ def suplementos(request):
         categoria = request.POST['categoria']
     else:
         categoria = "Sumplementos"
-        productos = Item.objects.filter(categoria__icontains="SU").order_by('nombre')
+        productos = Suplemento.objects.filter(categoria__icontains="SU").order_by('nombre')
     return render(request, "crud_tienda/suplementos.html", {"productos": productos, "categoria": categoria})
 
 
