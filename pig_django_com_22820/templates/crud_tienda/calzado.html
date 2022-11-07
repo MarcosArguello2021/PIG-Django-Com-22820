@@ -14,10 +14,10 @@
           </a>
           <ul class="dropdown-menu dropdown-submenu">
             <li>
-              <a class="dropdown-item" href="{% url 'Calzado' %}M">Mujer</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro=M">Mujer</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'Calzado' %}H">Hombre</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro=H">Hombre</a>
             </li>
           </ul>
         </li>
@@ -28,7 +28,7 @@
           <ul class="dropdown-menu dropdown-submenu">
             {% for t in talle %}
             <li>
-              <a class="dropdown-item" href="{% url 'Calzado' %}?talle={{t}}">{{t}}</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro={{t}}">{{t}}</a>
             </li>
             {% endfor %}
           </ul>

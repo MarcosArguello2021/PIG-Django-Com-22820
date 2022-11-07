@@ -33,18 +33,17 @@ def calzado(request,filtro=None):
     if request.method == 'POST':
         categoria = request.POST['categoria']
         talle = request.POST['talle']
-    elif request.method == 'GET':
-        filtro = request.GET
-        print(request.GET)
-        if filtro == 'M' or filtro == 'H':
-            productos = Item.objects.filter(categoria__contains="CA",sexo=filtro).order_by('nombre')
-        elif
-        if filtro == 'Mujer':
-            productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
-        elif filtro == 'Hombre':
-            productos = Item.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
-        elif filtro == request.GET:
-            print(filtro)
+    else:
+        dict = request.GET
+        print(dict)
+        if dict['filtro'] == 'M' or dict['filtro'] == 'H':
+            productos = Item.objects.filter(categoria__contains="CA",sexo=dict['filtro']).order_by('nombre')
+        elif filtro != None:
+            productos = Item.objects.filter(categoria__contains="CA",talle=dict['filtro']).order_by('nombre')
+        # if filtro == 'Mujer':
+        #     productos = Item.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
+        # elif filtro == 'Hombre':
+        #     productos = Item.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
         else:
             productos = Item.objects.filter(categoria__contains="CA").order_by('nombre')
     return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talle":talle,"filtro":filtro})
