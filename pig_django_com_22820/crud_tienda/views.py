@@ -1,4 +1,4 @@
-# from django.template import loader
+from django.views.generic import ListView
 from django.shortcuts import render, redirect
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento
 from crud_tienda.forms import FormContacto
@@ -8,10 +8,21 @@ from pig_django_com_22820.settings import EMAIL_HOST_USER
 # Create your views here.
 
 
-def index(request):
-    """ esto es la explicación"""
-    productos = Item.objects.all().order_by('?')[:10]
-    return render(request, "crud_tienda/index.html", {"productos": productos})
+class IndexView(ListView):
+    model = Vestimenta
+    context_object_name = 'productos' # este es el queryset, no el contexto. CUAL es el contexto?
+    template_name = "crud_tienda/index.html"
+    queryset = Vestimenta.objects.all().order_by('?')[:5]
+    # productos = Item.objects.all().order_by('?')[:10]
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        # context['vestimentas'] = Vestimenta.objects.all().order_by('?')[:5]
+        context['vestimentas'] = self.queryset
+        context['calzados'] = Calzado.objects.all().order_by('?')[:5]
+        context['accesorios'] = Accesorio.objects.all().order_by('?')[:5]
+        context['suplementos'] = Suplemento.objects.all().order_by('?')[:5]
+        return context
 
 
 def calzado(request,filtro=None):

@@ -1,9 +1,10 @@
 from django.urls import path, re_path
+from crud_tienda.views import IndexView
 from . import views
 from django.conf import settings
 
 urlpatterns = [
-    path('', views.index ,name="Home"),
+    path('', IndexView.as_view() ,name="Home"),
     path('vestimenta/', views.vestimenta,name='Vestimenta'),
     path('calzado/', views.calzado,name='Calzado'),
     path('calzado/<str:filtro>/', views.calzado,name='Calzado-filtro'),
