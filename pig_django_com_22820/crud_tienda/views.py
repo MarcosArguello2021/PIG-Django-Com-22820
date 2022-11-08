@@ -9,19 +9,21 @@ from pig_django_com_22820.settings import EMAIL_HOST_USER
 
 
 class IndexView(TemplateView):
-    # model = Vestimenta
-    context_object_name = 'productos' # este es el queryset, no el contexto. CUAL es el contexto?
     template_name = "crud_tienda/index.html"
+    # model = Vestimenta
+    # context_object_name = 'productos' # este es el queryset, no el contexto. CUAL es el contexto?
     # queryset = Vestimenta.objects.all().order_by('?')[:5]
     # productos = Item.objects.all().order_by('?')[:10]
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['vestimentas'] = Vestimenta.objects.all().order_by('?')[:5]
         # context['vestimentas'] = self.queryset
+        context['vestimentas'] = Vestimenta.objects.all().order_by('?')[:5]
         context['calzados'] = Calzado.objects.all().order_by('?')[:5]
         context['accesorios'] = Accesorio.objects.all().order_by('?')[:5]
         context['suplementos'] = Suplemento.objects.all().order_by('?')[:5]
+        # productos = vestimentas + calzados + accesorios + suplementos
+        print(context) # en produccion se va...
         return context
 
 
