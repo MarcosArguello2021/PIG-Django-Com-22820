@@ -22,7 +22,6 @@ class IndexView(TemplateView):
         context['calzados'] = Calzado.objects.all().order_by('?')[:5]
         context['accesorios'] = Accesorio.objects.all().order_by('?')[:5]
         context['suplementos'] = Suplemento.objects.all().order_by('?')[:5]
-        # productos = vestimentas + calzados + accesorios + suplementos
         print(context) # en produccion se va...
         return context
 
