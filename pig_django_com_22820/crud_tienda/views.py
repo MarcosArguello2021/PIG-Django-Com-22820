@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.shortcuts import render, redirect
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento
 from crud_tienda.forms import FormContacto
@@ -25,40 +25,58 @@ class IndexView(TemplateView):
         print(context) # en produccion se va...
         return context
 
+# class Calzado(ListView):
+#     model = Calzado
+#     context_object_name = 'productos' # este es el queryset
+#     template_name = "crud_tienda/calzado.html"
+#     queryset = Calzado.objects.all().order_by('nombre')
 
-def calzado(request,filtro=None):
+#     def get(self, request, *args, **kwargs):
+#         dict = request.GET
+#         print(dict)
+#         if dict['filtro'] == 'M' or dict['filtro'] == 'H':
+#             productos = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+#         elif dict['filtro'] != None:
+#             productos = Calzado.objects.filter(talle=dict['filtro']).order_by('nombre')
+#         else:
+#             productos = Calzado.objects.all().order_by('nombre')
+#         return render(request,self.template_name,{"productos":productos})
+
+
+
+def calzado(request):
     categoria = "Calzado"
-    talle = (
-    ('34.5(3.5 uk)'),
-    ('35.5(4 uk)'),
-    ('36(4.5 uk)'),
-    ('38(6 uk)'),
-    ('39(7 uk)'),
-    ('40(8 uk)'),
-    ('41(8.5 uk)'),
-    ('41.5(9 uk)'),
-    ('42(9.5 uk)'),
-    ('43(10 uk)'),
-    ('44(11 uk)'),
-    ('45(11.5 uk)'),
+    talles = (
+    ('34.5'),
+    ('35.5'),
+    ('36'),
+    ('38'),
+    ('39'),
+    ('40'),
+    ('41'),
+    ('41.5'),
+    ('42'),
+    ('43'),
+    ('44'),
+    ('45'),
     )
+
     if request.method == 'POST':
         categoria = request.POST['categoria']
         talle = request.POST['talle']
     else:
         dict = request.GET
+        print("--------------")
         print(dict)
-        if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-            productos = Calzado.objects.filter(categoria__contains="CA",sexo=dict['filtro']).order_by('nombre')
-        elif filtro != None:
-            productos = Calzado.objects.filter(categoria__contains="CA",talle=dict['filtro']).order_by('nombre')
-        # if filtro == 'Mujer':
-        #     productos = Calzado.objects.filter(categoria__contains="CA",sexo='M').order_by('nombre')
-        # elif filtro == 'Hombre':
-        #     productos = Calzado.objects.filter(categoria__contains="CA",sexo='H').order_by('nombre')
+        print("--------------")
+        if dict:
+            if dict['filtro'] == 'M' or dict['filtro'] == 'H':
+                productos = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+            elif dict['filtro'] != None:
+                productos = Calzado.objects.filter(talle=dict['filtro']).order_by('nombre')
         else:
-            productos = Calzado.objects.filter(categoria__contains="CA").order_by('nombre')
-    return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talle":talle,"filtro":filtro})
+            productos = Calzado.objects.all().order_by('nombre')
+    return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talles":talles})
 
 
 def vestimenta(request):

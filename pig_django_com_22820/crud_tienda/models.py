@@ -3,26 +3,27 @@ from django.db import models
 # Create your models here.
 
 # Choices
-CATEGORIAS = (
-    ('VM', 'Vestimenta'),
-    ('CA', 'Calzado'),
-    ('AC', 'Accesorios'),
-    ('SU', 'Suplementos'),
-)
-
 SEXO = (
     ('M', 'Mujer'),
     ('H', 'Hombre'),
 )
 
+# CATEGORIAS = (
+#     ('VM', 'Vestimenta'),
+#     ('CA', 'Calzado'),
+#     ('AC', 'Accesorios'),
+#     ('SU', 'Suplementos'),
+# )
+
+
 class Item(models.Model):
     nombre = models.CharField(max_length=50, verbose_name='Producto')
     precio = models.FloatField()
     foto = models.ImageField(upload_to='productos')
-    categoria = models.CharField(max_length=2, choices=CATEGORIAS)
-    # talle = models.CharField(max_length=2,choices=TALLESVES,blank=True, null=True) #elif categoria == 'CA': if sexo == 'M': choices == TALLESZAPMU elif sexo == 'H': choices == TALLESZAPHO), blank=True, null=True)
     info = models.CharField(max_length=250)
     stock = models.IntegerField()
+    # categoria = models.CharField(max_length=2, choices=CATEGORIAS)
+    # talle = models.CharField(max_length=2,choices=TALLESVES,blank=True, null=True) #elif categoria == 'CA': if sexo == 'M': choices == TALLESZAPMU elif sexo == 'H': choices == TALLESZAPHO), blank=True, null=True)
     # subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
     # sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
 
@@ -31,6 +32,7 @@ class Item(models.Model):
 
     def __str__(self):
         return self.nombre
+
 
 class Vestimenta(Item):
 
@@ -50,10 +52,9 @@ class Vestimenta(Item):
     )
     
     talle = models.CharField(max_length=2,choices=TALLES,blank=True, null=True)
-
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
-
     sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
+
 
 class Calzado(Item):
 
@@ -70,10 +71,9 @@ class Calzado(Item):
     ('43', '43(10 uk)'),
     ('44', '44(11 uk)'),
     ('45', '45(11.5 uk)'),
-)
+    )
     
     talle = models.CharField(max_length=4,choices=TALLES,blank=True, null=True)
-
     sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
 
 class Suplemento(Item):
