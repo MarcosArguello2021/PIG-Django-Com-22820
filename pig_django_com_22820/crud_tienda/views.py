@@ -27,7 +27,7 @@ class IndexView(TemplateView):
 
 # class Calzado(ListView):
 #     model = Calzado
-#     context_object_name = 'productos' # este es el queryset
+#     context_object_name = 'productos' # este es el nombre del queryset
 #     template_name = "crud_tienda/calzado.html"
 #     queryset = Calzado.objects.all().order_by('nombre')
 
@@ -131,7 +131,7 @@ def contacto(request):
             print(email)
             try:
                 email.send()
-                return redirect('home')
+                return redirect('Home')
             except:
                 # aca habría que crear una excepcion o mensaje de error propio y que continúe
                 raise ValueError("Ocurrió un error...")
