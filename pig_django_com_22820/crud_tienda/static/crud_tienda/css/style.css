@@ -13,6 +13,8 @@
 
 .item .img-responsive {
     width: 100%;
+    height: 20vw;
+    object-fit: contain;
     padding: 1em, 0;
 }
 
@@ -54,46 +56,52 @@
     box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     text-align: center;
 }
+
 /* -------- menu desplegable ------------ */
 .dropdown-menu li {
-position: relative;
+    position: relative;
 }
+
 .dropdown-menu .dropdown-submenu {
-display: none;
-position: absolute;
-left: 100%;
-top: -7px;
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -7px;
 }
+
 .dropdown-menu .dropdown-submenu-left {
-right: 100%;
-left: auto;
+    right: 100%;
+    left: auto;
 }
-.dropdown-menu > li:hover > .dropdown-submenu {
-display: block;
+
+.dropdown-menu>li:hover>.dropdown-submenu {
+    display: block;
 }
 
 .item .about {
     text-align: left;
     font-size: 1.2em;
-  }
-  
-  .itemListContainer {
+}
+
+.itemListContainer {
     text-align: center;
-  }
-  .itemListContainer .title {
+}
+
+.itemListContainer .title {
     padding: 0.875em;
-  }
-  .itemListContainer .containerList {
+}
+
+.itemListContainer .containerList {
     display: grid;
     box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     border-radius: 10px;
     text-align: center;
-  }
+}
 
-  .header {
+.header {
     grid-area: header;
     border-radius: 10px;
-    background-color: rgba(123, 104, 129, 0.638) !important;
+    background-color: rgba(56, 112, 136, 0.199) !important;
     backdrop-filter: saturate(180%) blur(5px);
     height: 80px;
     position: fixed;
@@ -116,7 +124,12 @@ display: block;
     text-decoration: none;
 }
 
-#nav-logo{
+.nav-link {
+    display: block;
+    padding: .25rem !important;
+}
+
+#nav-logo {
     height: 80px;
     padding: 5px 20px;
     line-height: 4em;
@@ -148,28 +161,29 @@ display: block;
 .nav-menu-item {
     font-size: 18px;
     margin: 0 10px;
-    line-height: 5em;
+    line-height: 4.5em;
     text-transform: uppercase;
     width: max-content;
 }
 
 .nav-menu-links {
-    padding: 8px 12px;
-    border-radius: 3px;
+    text-decoration: none !important;
+    padding: 1rem 1rem;
+    border-radius: 5px;
     transition: 0.5s;
 }
 
 .nav-menu-links:hover,
 .nav-menu-links_active {
-    border-radius: 30px;
-    background-color: darkcyan;
+    border-radius: .25rem;
+    background-color: #126973;
     transition: 0.3s;
     text-shadow: 1px 1px 1px darkslategray;
     color: antiquewhite;
 }
 
-.ruta-productos{
- margin-top: 6em;
+.ruta-productos {
+    margin-top: 6em;
 }
 
 @media (max-width: 900px) {
@@ -215,4 +229,106 @@ display: block;
     }
 }
 
+.footer {
+    grid-area: footer;
+    background-color: rgba(71, 102, 131, 0.638) !important;
+    backdrop-filter: saturate(180%) blur(5px);
+    color: #25262e;
+    font-size: 0.875em;
+    border-radius: 0.5rem;
+}
+
+.footer-row {
+    padding: 1em 1em;
+}
+
+.footer-row-primary {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+.footer-column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 0 2em;
+    /* min-height: 15em; */
+}
+
+.footer-h3 {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 1.4em;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.footer-ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+
+}
+
+.footer-li:not(:first-child) {
+    margin-top: 0.9em;
+}
+
+.footer-ul-li-a {
+    color: #25262e;
+    text-decoration: none;
+    letter-spacing: .075em;
+}
+
+.footer-ul-li-a:hover {
+    color: #717171;
+}
+
+.footer-about-p {
+    text-align: justify;
+    line-height: 2;
+    margin: 0;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2.4em;
+    flex-direction: row;
+    margin-top: 0.5em;
+}
+
+.footer-social-i {
+    color: #bac6d9;
+}
+
+.footer-copyright {
+    padding: 0.8em 1em;
+    background-color: #25262e;
+}
+
+.footer-menu {
+    float: left;
+}
+
+.footer-menu-a {
+    color: #cfd2d6;
+    padding: 6px;
+    text-decoration: none;
+}
+
+.footer-menu-a:hover {
+    color: #27bcda;
+}
+
+.footer-copyright-p {
+    font-size: 0.9em;
+    text-align: right;
+    color: beige;
+}
 /* ----------------------------------------- */

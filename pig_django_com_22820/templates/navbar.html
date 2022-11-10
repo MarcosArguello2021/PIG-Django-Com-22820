@@ -1,4 +1,3 @@
-<!-- https://getbootstrap.com/docs/4.0/components/navbar/ -->
 <header class="header" id="navBarId">
     {% load static %}
     <nav class="navBar">
@@ -15,30 +14,3 @@
         </ul>
     </nav>
 </header>
-
-{% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    {% load static %}
-    <a class="navbar-brand" href="{% url 'Home' %}"><img width="80" src="{% static 'crud_tienda/img/logo.png' %}" alt="logo"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuHamburg" aria-controls="menuHamburg" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="menuHamburg">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item {% if 'Vestimenta' in request.path %}active{% endif %}">
-                <a class="nav-link " href="{% url 'Vestimenta' %}">VESTIMENTA</a>
-            </li>
-            <li class="nav-item {% if 'Calzado' in request.path %}active{% endif %}">
-                <a class="nav-link " href="{% url 'Calzado' %}">CALZADO</a>
-            </li>
-            <li class="nav-item {% if 'Accesorios' in request.path %}active{% endif %}">
-                <a class="nav-link " href="{% url 'Accesorios' %}">ACCESORIOS</a>
-            </li>
-            <li class="nav-item {% if 'Suplementos' in request.path %}active{% endif %}">
-                <a class="nav-link" href="{% url 'Suplementos' %}">SUPLEMENTOS</a>
-            </li>
-            <li class="nav-item {% if 'Contacto' in request.path %}active{% endif %}">
-                <a class="nav-link" href="{% url 'Contacto' %}">CONTACTO</a>
-            </li>
-        </ul>
-    </div>
-</nav> {% endcomment %}

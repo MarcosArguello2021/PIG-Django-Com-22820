@@ -4,7 +4,7 @@ from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento
 from crud_tienda.forms import FormContacto
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
-
+from itertools import chain
 # Create your views here.
 
 
@@ -16,14 +16,16 @@ class IndexView(TemplateView):
     # productos = Item.objects.all().order_by('?')[:10]
 
     def get_context_data(self, *args, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        # context['vestimentas'] = self.queryset
-        context['vestimentas'] = Vestimenta.objects.all().order_by('?')[:5]
-        context['calzados'] = Calzado.objects.all().order_by('?')[:5]
-        context['accesorios'] = Accesorio.objects.all().order_by('?')[:5]
-        context['suplementos'] = Suplemento.objects.all().order_by('?')[:5]
-        print(context) # en produccion se va...
-        return context
+       context = super(IndexView, self).get_context_data(**kwargs)
+       # context['vestimentas'] = self.queryset
+       vestimentas = Vestimenta.objects.all().order_by('?')[:5]
+       calzados = Calzado.objects.all().order_by('?')[:5]
+       accesorios= Accesorio.objects.all().order_by('?')[:5]
+       suplementos = Suplemento.objects.all().order_by('?')[:5]
+       queryList = list(chain(vestimentas, calzados, accesorios,suplementos))
+       context['productos'] = queryList
+       print(context) # en produccion se va...
+       return context
 
 # class Calzado(ListView):
 #     model = Calzado
