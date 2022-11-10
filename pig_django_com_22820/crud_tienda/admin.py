@@ -1,21 +1,21 @@
 from django.contrib import admin
-from .models import Vestimenta, Calzado, Suplemento, Accesorio
+from .models import Vestimenta, Calzado, Suplemento, Accesorio, Opciones_vestimenta
 
 # Register your models here.
+
+class Opciones_vestimentaInline(admin.TabularInline):
+    model = Opciones_vestimenta
+
 class VestimentaAdmin(admin.ModelAdmin):
-    list_display = ("nombre","precio","foto","info","stock","sexo","talle") # campos q aparecen
-    fields = ['nombre','foto','stock','precio',('sexo','talle', 'subcategoria'),'info'] # orden (si los meto en una tupla (a,b,c) los muestra en horizontal)
+    list_display = ("nombre","precio","foto","info","sexo") # campos q aparecen
+    fields = ['nombre','foto','precio',('sexo', 'subcategoria'),'info'] # orden (si los meto en una tupla (a,b,c) los muestra en horizontal)
     search_fields = ('nombre',)
-    list_filter = ("precio","sexo","stock", "talle")
+    list_filter = ("precio","sexo")
+    inlines = [
+        Opciones_vestimentaInline,
+    ]
 
-
-class CalzadoAdmin(admin.ModelAdmin):
-    list_display = ("nombre","precio","foto","info","stock","sexo","talle") # campos q aparecen
-    fields = ['nombre','foto','stock','precio',('sexo','talle'),'info'] # orden (si los meto en una tupla (a,b,c) los muestra en horizontal)
-    search_fields = ('nombre',)
-    list_filter = ("precio","sexo","stock", "talle")
 
 admin.site.register(Vestimenta, VestimentaAdmin)
-admin.site.register(Calzado, CalzadoAdmin)
 admin.site.register(Suplemento)
 admin.site.register(Accesorio)

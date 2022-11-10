@@ -88,7 +88,7 @@ def vestimenta(request):
         
     else:
         categoria = "Vestimenta"
-        productos = Vestimenta.objects.filter(categoria__icontains="VM").order_by('nombre')
+        productos = Vestimenta.objects.all().order_by('nombre')
     return render(request, "crud_tienda/vestimenta.html", {"productos": productos, "categoria": categoria})
 
 
@@ -98,7 +98,7 @@ def accesorios(request):
         
     else:
         categoria = "Accesorios"
-        productos = Accesorio.objects.filter(categoria__icontains="AC").order_by('nombre')
+        productos = Accesorio.objects.all().order_by('nombre')
     return render(request, "crud_tienda/accesorios.html", {"productos": productos, "categoria": categoria})
 
 
@@ -107,7 +107,7 @@ def suplementos(request):
         categoria = request.POST['categoria']
     else:
         categoria = "Sumplementos"
-        productos = Suplemento.objects.filter(categoria__icontains="SU").order_by('nombre')
+        productos = Suplemento.objects.all().order_by('nombre')
     return render(request, "crud_tienda/suplementos.html", {"productos": productos, "categoria": categoria})
 
 

@@ -2,37 +2,24 @@ from django.db import models
 
 # Create your models here.
 
-# Choices
 SEXO = (
     ('M', 'Mujer'),
     ('H', 'Hombre'),
 )
 
-# CATEGORIAS = (
-#     ('VM', 'Vestimenta'),
-#     ('CA', 'Calzado'),
-#     ('AC', 'Accesorios'),
-#     ('SU', 'Suplementos'),
-# )
-
+#Clase abstracta para cada categoría
 
 class Item(models.Model):
+
     nombre = models.CharField(max_length=50, verbose_name='Producto')
     precio = models.FloatField()
     foto = models.ImageField(upload_to='productos')
     info = models.CharField(max_length=250)
-    stock = models.IntegerField()
-    # categoria = models.CharField(max_length=2, choices=CATEGORIAS)
-    # talle = models.CharField(max_length=2,choices=TALLESVES,blank=True, null=True) #elif categoria == 'CA': if sexo == 'M': choices == TALLESZAPMU elif sexo == 'H': choices == TALLESZAPHO), blank=True, null=True)
-    # subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
-    # sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
-
-    class Meta:
-        abstract = True
 
     def __str__(self):
         return self.nombre
 
+#Vestimenta y sus opciones
 
 class Vestimenta(Item):
 
@@ -43,6 +30,12 @@ class Vestimenta(Item):
     ('PC', 'Pantalones & Calzas'),
     )
 
+    
+    subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
+    sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
+
+class Opciones_vestimenta(models.Model):
+    
     TALLES = (
     ('XS', 'Extra Small'),
     ('S', 'Small'),
@@ -50,14 +43,19 @@ class Vestimenta(Item):
     ('L', 'Large'),
     ('XL', 'Extra Large'),
     )
-    
-    talle = models.CharField(max_length=2,choices=TALLES,blank=True, null=True)
-    subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
-    sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
 
+    talle = models.CharField(max_length=2, choices=TALLES, blank=True, null=True)
+    stock = models.IntegerField()
+    item_fk = models.ForeignKey(Vestimenta, on_delete=models.CASCADE)
+
+#Calzado y sus opciones
 
 class Calzado(Item):
 
+    sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
+
+class Opciones_calzado(models.Model):
+    
     TALLES = (
     ('34.5', '34.5(3.5 uk)'),
     ('35.5', '35.5(4 uk)'),
@@ -72,9 +70,12 @@ class Calzado(Item):
     ('44', '44(11 uk)'),
     ('45', '45(11.5 uk)'),
     )
-    
-    talle = models.CharField(max_length=4,choices=TALLES,blank=True, null=True)
-    sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
+
+    talle = models.CharField(max_length=4, choices=TALLES, blank=True, null=True)
+    stock = models.IntegerField()
+    calzado = models.ForeignKey(Calzado, on_delete=models.CASCADE)
+
+#Suplementos y sus opciones
 
 class Suplemento(Item):
 
@@ -84,6 +85,9 @@ class Suplemento(Item):
     )
     
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
+    stock = models.IntegerField()
+
+#Accesorios y sus opciones
 
 class Accesorio(Item):
 
@@ -93,3 +97,4 @@ class Accesorio(Item):
     )
 
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
+    stock = models.IntegerField()
