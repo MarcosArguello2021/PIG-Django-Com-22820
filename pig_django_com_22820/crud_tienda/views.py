@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView, ListView
 from django.shortcuts import render, redirect
-from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento
+from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta
 from crud_tienda.forms import FormContacto
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
