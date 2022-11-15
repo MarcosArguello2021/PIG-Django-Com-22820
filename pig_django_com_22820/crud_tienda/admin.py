@@ -27,8 +27,9 @@ class CalzadoAdmin(admin.ModelAdmin):
         Opciones_calzadoInline,
     ]
 
+#class SuplementoAdmin(admin.ModelAdmin)
 
 admin.site.register(Vestimenta, VestimentaAdmin)
 admin.site.register(Calzado, CalzadoAdmin)
-admin.site.register(Suplemento)
+admin.site.register(Suplemento)#, SuplementoAdmin)
 admin.site.register(Accesorio)
