@@ -13,11 +13,14 @@ class Item(models.Model):
 
     nombre = models.CharField(max_length=50, verbose_name='Producto')
     precio = models.FloatField()
-    foto = models.ImageField(upload_to='productos')
+    foto = models.ImageField(upload_to='productos', default='camo-pants.jpg')
     info = models.CharField(max_length=250)
 
     def __str__(self):
         return self.nombre
+
+    class Meta:
+        abstract = True
 
 #Vestimenta y sus opciones
 
@@ -45,7 +48,7 @@ class Opciones_vestimenta(models.Model):
     )
 
     talle = models.CharField(max_length=2, choices=TALLES, blank=True, null=True)
-    stock = models.IntegerField()
+    stock = models.PositiveIntegerField()
     item_fk = models.ForeignKey(Vestimenta, on_delete=models.CASCADE)
 
 #Calzado y sus opciones
@@ -72,7 +75,7 @@ class Opciones_calzado(models.Model):
     )
 
     talle = models.CharField(max_length=4, choices=TALLES, blank=True, null=True)
-    stock = models.IntegerField()
+    stock = models.PositiveIntegerField()
     calzado = models.ForeignKey(Calzado, on_delete=models.CASCADE)
 
 #Suplementos y sus opciones
@@ -85,7 +88,7 @@ class Suplemento(Item):
     )
     
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
-    stock = models.IntegerField()
+    stock = models.PositiveIntegerField()
 
 #Accesorios y sus opciones
 
@@ -97,4 +100,4 @@ class Accesorio(Item):
     )
 
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
-    stock = models.IntegerField()
+    stock = models.PositiveIntegerField()
