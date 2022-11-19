@@ -75,7 +75,9 @@ def calzado(request):
             if dict['filtro'] == 'M' or dict['filtro'] == 'H':
                 productos = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
             elif dict['filtro'] != None:
-                productos = Calzado.objects.filter(talle=dict['filtro']).order_by('nombre')
+                opcion = Opciones_calzado.objects(talle=dict['filtro'])
+                print(opcion)
+                productos = Calzado.objects.filter().order_by('nombre')
         else:
             productos = Calzado.objects.all().order_by('nombre')
     return render(request, "crud_tienda/calzado.html", {"productos": productos, "categoria": categoria,"talles":talles})
