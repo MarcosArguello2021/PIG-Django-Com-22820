@@ -1,0 +1,17 @@
+{% extends 'crud_tienda/index.html' %}
+{% block title %}Detalle de producto{% endblock %}
+
+{% block filters %}
+
+<div class="item">
+    <a href="#"><img src="{{object.foto.url}}" class="img-responsive" /></a
+    ><a class="link" href="#">
+      <h2 class="nombre">{{object.nombre}}</h2>
+    </a>
+    <h4>$ {{ object.precio|floatformat:2}}</h4>
+    <h5>$ {{ object.info}}</h5>
+    <a href="#"><button class="btn btn-secondary">Unidades</button></a>
+    <a href="#"><button class="btn btn-secondary">Comprar</button></a>
+  </div>
+
+{% endblock %}
