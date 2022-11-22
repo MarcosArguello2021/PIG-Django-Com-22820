@@ -107,6 +107,13 @@ class SuplementosLista(ListView):
     model = Suplemento
     template_name = 'crud_tienda/suplementos.html'
 
+class DetalleAccesorios(DetailView):
+    model = Accesorio
+    template_name = 'crud_tienda/detalle.html'
+
+
+
+# Vistas basadas en funciones:
 
 # def calzado(request):
 #     talles = (
@@ -140,9 +147,7 @@ class SuplementosLista(ListView):
 #             object_list = Calzado.objects.all().order_by('nombre')
 #     return render(request, "crud_tienda/calzado.html", {"object_list": object_list,"talles":talles})
 
-class DetalleAccesorios(DetailView):
-    model = Accesorio
-    template_name = 'crud_tienda/detalle.html'
+
 
 # def vestimenta(request):
 #     if request.method == 'POST':
