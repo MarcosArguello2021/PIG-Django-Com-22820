@@ -16,54 +16,69 @@ class IndexView(TemplateView):
     # productos = Item.objects.all().order_by('?')[:10]
 
     def get_context_data(self, *args, **kwargs):
-       context = super(IndexView, self).get_context_data(**kwargs)
-       # context['vestimentas'] = self.queryset
-       vestimentas = Vestimenta.objects.all().order_by('?')[:5]
-       calzados = Calzado.objects.all().order_by('?')[:5]
-       accesorios= Accesorio.objects.all().order_by('?')[:5]
-       suplementos = Suplemento.objects.all().order_by('?')[:5]
-       queryList = list(chain(vestimentas, calzados, accesorios,suplementos))
-       context['object_list'] = queryList
-       print(context) # en produccion se va...
-       return context
+        context = super(IndexView, self).get_context_data(**kwargs)
+        # context['vestimentas'] = self.queryset
+        vestimentas = Vestimenta.objects.all().order_by('?')[:5]
+        calzados = Calzado.objects.all().order_by('?')[:5]
+        accesorios = Accesorio.objects.all().order_by('?')[:5]
+        suplementos = Suplemento.objects.all().order_by('?')[:5]
+        queryList = list(chain(vestimentas, calzados, accesorios, suplementos))
+        context['object_list'] = queryList
+        print(context)  # en produccion se va...
+        return context
+
 
 class CalzadoLista(ListView):
     model = Calzado
     template_name = "crud_tienda/calzado.html"
-    talles = (
-    ('34.5'),
-    ('35.5'),
-    ('36'),
-    ('38'),
-    ('39'),
-    ('40'),
-    ('41'),
-    ('41.5'),
-    ('42'),
-    ('43'),
-    ('44'),
-    ('45'),
-    )
+    talles = []
+    for tuplita in Opciones_calzado.TALLES:
+        talles.append(tuplita[0])
 
     def get(self, request, *args, **kwargs):
         dict = request.GET
         print(dict)
         if dict:
             if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-                object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+                object_list = Calzado.objects.filter(
+                    sexo=dict['filtro']).order_by('nombre')
             elif dict['filtro'] != None:
-                object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
-            # else:
-            #     object_list = Calzado.objects.all().order_by('nombre')
-        return render(request,self.template_name,{"object_list":object_list,"talles":talles})
+                object_list = Calzado.objects.filter(
+                    opciones_calzado__talle=str(dict['filtro']))
+        else:
+            object_list = Calzado.objects.all().order_by('nombre')
+        return render(request, self.template_name, {"object_list": object_list, "talles": self.talles})
+
 
 class VestimentaLista(ListView):
     model = Vestimenta
     template_name = 'crud_tienda/vestimenta.html'
+    talles = []
+    for tuplita in Opciones_vestimenta.TALLES:
+        talles.append(tuplita[0])
+
+    def get(self, request, *args, **kwargs):
+        dict = request.GET
+        print(dict)
+        if dict:
+            if dict['filtro'] == 'M' or dict['filtro'] == 'H':
+                object_list = Vestimenta.objects.filter(
+                    sexo=dict['filtro']).order_by('nombre')
+            elif dict['filtro'] != None:
+                object_list = Vestimenta.objects.filter(
+                    opciones_vestimenta__talle=str(dict['filtro']))
+        else:
+            object_list = Vestimenta.objects.all().order_by('nombre')
+        return render(request, self.template_name, {"object_list": object_list, "talles": self.talles})
+
+
+
+
 
 class AccesoriosLista(ListView):
     model = Accesorio
     template_name = 'crud_tienda/accesorios.html'
+
 
 class SuplementosLista(ListView):
     model = Suplemento
@@ -130,7 +145,6 @@ class DetalleAccesorios(DetailView):
 #         categoria = "Sumplementos"
 #         productos = Suplemento.objects.all().order_by('nombre')
 #     return render(request, "crud_tienda/suplementos.html", {"productos": productos, "categoria": categoria})
-
 
 
 def contacto(request):
