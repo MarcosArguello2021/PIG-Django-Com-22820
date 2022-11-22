@@ -27,9 +27,11 @@
           </a>
           <ul class="dropdown-menu dropdown-submenu">
             {% for s in subcat_dict %}
-            <li>
-              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{s.keys.0}}">{{s.values.0}}</a>
-            </li>
+              {% for key,value in s %}
+              <li>
+                <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{keys}}">{{value}}</a>
+              </li>
+              {% endfor %}
             {% endfor %}
           </ul>
         </li>
