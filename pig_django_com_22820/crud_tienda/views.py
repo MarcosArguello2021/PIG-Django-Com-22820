@@ -57,22 +57,31 @@ class VestimentaLista(ListView):
     for tuplita in Opciones_vestimenta.TALLES:
         talles.append(tuplita[0])
 
+    subcat = []
+    for subc in Vestimenta.SUBCATEGORIA:
+        subcat.append(subc[0])
+    subcat_val = []
+    for subc in Vestimenta.SUBCATEGORIA:
+        subcat_val.append(subc[1])
+    subcat_dict = {}
+    for i in range(len(subcat_val)):
+        subcat_dict[subcat[i]]=subcat_val[i]
+    print(subcat_dict)
+
+
     def get(self, request, *args, **kwargs):
         dict = request.GET
         print(dict)
         if dict:
             if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-                object_list = Vestimenta.objects.filter(
-                    sexo=dict['filtro']).order_by('nombre')
+                object_list = Vestimenta.objects.filter(sexo=dict['filtro']).order_by('nombre')
+            elif dict['filtro'] in self.subcat:
+                object_list = Vestimenta.objects.filter(subcategoria=str(dict['filtro']))
             elif dict['filtro'] != None:
-                object_list = Vestimenta.objects.filter(
-                    opciones_vestimenta__talle=str(dict['filtro']))
+                object_list = Vestimenta.objects.filter(opciones_vestimenta__talle=str(dict['filtro']))
         else:
             object_list = Vestimenta.objects.all().order_by('nombre')
-        return render(request, self.template_name, {"object_list": object_list, "talles": self.talles})
-
-
-
+        return render(request, self.template_name, {"object_list": object_list, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
 
 class AccesoriosLista(ListView):

@@ -10,20 +10,41 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
           <a class="dropdown-item" href="#">
-            Categoria &raquo;
+            Categoria  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
             <li>
-              <a class="dropdown-item" href="#">Mujer</a>
+              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro=M">Mujer</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">Hombre</a>
+              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro=H">Hombre</a>
             </li>
           </ul>
         </li>
-      <li><a class="dropdown-item" href="#">Color</a></li>
-      <li><a class="dropdown-item" href="#">Tipo de prenda</a></li>
-      <li><a class="dropdown-item" href="#">Talle</a></li>
+        <li>
+          <a class="dropdown-item" href="#">
+            Tipo de prenda  &raquo;
+          </a>
+          <ul class="dropdown-menu dropdown-submenu">
+            {% for s in subcat_dict %}
+            <li>
+              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{s.keys.0}}">{{s.values.0}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
+            Talle  &raquo;
+          </a>
+          <ul class="dropdown-menu dropdown-submenu">
+            {% for t in talles %}
+            <li>
+              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{t}}">{{t}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
     </ul>
   </div>
 {% endblock %}
