@@ -1,12 +1,24 @@
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import render, redirect
-from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta
+from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
 from crud_tienda.forms import FormContacto
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
 # Create your views here.
 
+def pasar_a_dict(tuplaChoices):
+        llaves = []
+        for e in tuplaChoices:
+            llaves.append(e[0])
+        valores = []
+        for e in tuplaChoices:
+            valores.append(e[1])
+        dict = {}
+        for i in range(len(valores)):
+            dict[llaves[i]]=valores[i]
+        # print(dict)
+        return dict
 
 class IndexView(TemplateView):
     template_name = "crud_tienda/index.html"
@@ -31,57 +43,59 @@ class IndexView(TemplateView):
 class CalzadoLista(ListView):
     model = Calzado
     template_name = "crud_tienda/calzado.html"
-    talles = []
-    for tuplita in Opciones_calzado.TALLES:
-        talles.append(tuplita[0])
-
+    sexo = pasar_a_dict(SEXO)
+    talles = pasar_a_dict(Opciones_calzado.TALLES)
+    
     def get(self, request, *args, **kwargs):
         dict = request.GET
         print(dict)
         if dict:
-            if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-                object_list = Calzado.objects.filter(
-                    sexo=dict['filtro']).order_by('nombre')
-            elif dict['filtro'] != None:
-                object_list = Calzado.objects.filter(
-                    opciones_calzado__talle=str(dict['filtro']))
+            if dict['filtro'] in self.sexo.keys():
+                object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+            elif dict['filtro'] in self.talles.keys():
+                object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
         else:
             object_list = Calzado.objects.all().order_by('nombre')
-        return render(request, self.template_name, {"object_list": object_list, "talles": self.talles})
+        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles})
 
 
 class VestimentaLista(ListView):
     model = Vestimenta
     template_name = 'crud_tienda/vestimenta.html'
-    talles = []
-    for tuplita in Opciones_vestimenta.TALLES:
-        talles.append(tuplita[0])
+    sexo = pasar_a_dict(SEXO)
+    subcat_dict = pasar_a_dict(Vestimenta.SUBCATEGORIA)
+    talles = pasar_a_dict(Opciones_vestimenta.TALLES)
 
-    subcat = []
-    for subc in Vestimenta.SUBCATEGORIA:
-        subcat.append(subc[0])
-    subcat_val = []
-    for subc in Vestimenta.SUBCATEGORIA:
-        subcat_val.append(subc[1])
-    subcat_dict = {}
-    for i in range(len(subcat_val)):
-        subcat_dict[subcat[i]]=subcat_val[i]
-    print(subcat_dict)
+    # talles = []
+    # for tuplita in Opciones_vestimenta.TALLES:
+    #     talles.append(tuplita[0])
 
+    # subcat = []
+    # for subc in Vestimenta.SUBCATEGORIA:
+    #     subcat.append(subc[0])
+    # subcat_val = []
+    # for subc in Vestimenta.SUBCATEGORIA:
+    #     subcat_val.append(subc[1])
+    # subcat_dict = {}
+    # for i in range(len(subcat_val)):
+    #     subcat_dict[subcat[i]]=subcat_val[i]
+    # print(subcat_dict)
 
     def get(self, request, *args, **kwargs):
         dict = request.GET
+        print('-----------')
         print(dict)
+        print('-----------')
         if dict:
-            if dict['filtro'] == 'M' or dict['filtro'] == 'H':
+            if dict['filtro'] in self.sexo.keys():
                 object_list = Vestimenta.objects.filter(sexo=dict['filtro']).order_by('nombre')
-            elif dict['filtro'] in self.subcat:
+            elif dict['filtro'] in self.subcat_dict.keys():
                 object_list = Vestimenta.objects.filter(subcategoria=str(dict['filtro']))
-            elif dict['filtro'] != None:
+            elif dict['filtro'] in self.talles.keys():
                 object_list = Vestimenta.objects.filter(opciones_vestimenta__talle=str(dict['filtro']))
         else:
             object_list = Vestimenta.objects.all().order_by('nombre')
-        return render(request, self.template_name, {"object_list": object_list, "talles": self.talles,"subcat_dict":self.subcat_dict})
+        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
 
 class AccesoriosLista(ListView):

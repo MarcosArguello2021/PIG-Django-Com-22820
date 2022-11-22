@@ -13,12 +13,11 @@
             Categoria  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
+            {% for key,value in sexo.items %}
             <li>
-              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro=M">Mujer</a>
+              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{key}}">{{value}}</a>
             </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro=H">Hombre</a>
-            </li>
+            {% endfor %}
           </ul>
         </li>
         <li>
@@ -26,12 +25,10 @@
             Tipo de prenda  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
-            {% for s in subcat_dict %}
-              {% for key,value in s %}
+            {% for key,value in subcat_dict.items %}
               <li>
-                <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{keys}}">{{value}}</a>
+                <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{key}}">{{value}}</a>
               </li>
-              {% endfor %}
             {% endfor %}
           </ul>
         </li>
@@ -40,9 +37,9 @@
             Talle  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
-            {% for t in talles %}
+            {% for key,value in talles.items %}
             <li>
-              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{t}}">{{t}}</a>
+              <a class="dropdown-item" href="{% url 'Vestimenta' %}?filtro={{key}}">{{value}}</a>
             </li>
             {% endfor %}
           </ul>

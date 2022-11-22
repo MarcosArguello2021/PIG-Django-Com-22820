@@ -13,12 +13,11 @@
             Categoria  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
+            {% for key,value in sexo.items %}
             <li>
-              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro=M">Mujer</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro={{key}}">{{value}}</a>
             </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro=H">Hombre</a>
-            </li>
+            {% endfor %}
           </ul>
         </li>
         <li>
@@ -26,9 +25,9 @@
             Talle  &raquo;
           </a>
           <ul class="dropdown-menu dropdown-submenu">
-            {% for t in talles %}
+            {% for key,value in talles.items %}
             <li>
-              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro={{t}}">{{t}}</a>
+              <a class="dropdown-item" href="{% url 'Calzado' %}?filtro={{key}}">{{value}}</a>
             </li>
             {% endfor %}
           </ul>
