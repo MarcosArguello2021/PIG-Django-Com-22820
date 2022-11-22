@@ -107,7 +107,8 @@ class SuplementosLista(ListView):
     model = Suplemento
     template_name = 'crud_tienda/suplementos.html'
 
-class DetalleAccesorios(DetailView):
+class Detalle(DetailView):
+    # https://stackoverflow.com/questions/59367543/django-multiple-modelstable-in-one-view
     model = Accesorio
     template_name = 'crud_tienda/detalle.html'
 

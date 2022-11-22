@@ -14,7 +14,7 @@
                 <h2 class="nombre">{{p.nombre}}</h2>
               </a>
               <h4>$ {{ p.precio|floatformat:2}}</h4>
-              <a href="{% url 'detalle' p.id %}"><button class="btn btn-secondary">Ver Más</button></a>
+              <a href="{% url 'Detalle' p.id %}"><button class="btn btn-secondary">Ver Más</button></a>
             </div>
             {% endfor %}
           </div>
