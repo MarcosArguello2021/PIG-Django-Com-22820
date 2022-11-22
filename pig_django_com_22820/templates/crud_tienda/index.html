@@ -7,7 +7,7 @@
       <div class="items align-content-center">
         <div class="items">
           <div class="itemList">
-            {% for p in object_list %}
+            {% for p in object_list|dictsort:"nombre" %}
             <div class="item">
               <a href="#"><img src="{{p.foto.url}}" class="img-responsive" /></a
               ><a class="link" href="#">

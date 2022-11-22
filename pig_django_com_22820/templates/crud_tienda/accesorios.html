@@ -3,18 +3,24 @@
 
 {% block filters %}
 <div class="dropdown">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Filtros
-    </a>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <div class="btn-group dropright">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            categoria
-            </button>
-            
-        </div>
-        <button class="dropdown-item" type="button">Moda</button>
-        <button class="dropdown-item" type="button">Entrenamiento</button>
-    </div>
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-expanded="false">
+        Filtros
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li>
+            <a class="dropdown-item" href="#">
+                Categoria &raquo;
+            </a>
+            <ul class="dropdown-menu dropdown-submenu">
+                <li>
+                    <a class="dropdown-item" href="{% url 'Accesorios' %}?filtro=MO">Moda</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'Accesorios' %}?filtro=EN">Entrenamiento</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>
 {% endblock %}

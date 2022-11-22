@@ -23,45 +23,13 @@ class IndexView(TemplateView):
        accesorios= Accesorio.objects.all().order_by('?')[:5]
        suplementos = Suplemento.objects.all().order_by('?')[:5]
        queryList = list(chain(vestimentas, calzados, accesorios,suplementos))
-       context['productos'] = queryList
+       context['object_list'] = queryList
        print(context) # en produccion se va...
        return context
 
-# class Calzado(ListView):
-#     model = Calzado
-#     second_model = Opciones_calzado
-#     context_object_name = 'productos' # este es el nombre del queryset # default:object_list
-#     template_name = "crud_tienda/calzado.html"
-#     queryset = Calzado.objects.all().order_by('nombre')
-#     talles = (
-#     ('34.5'),
-#     ('35.5'),
-#     ('36'),
-#     ('38'),
-#     ('39'),
-#     ('40'),
-#     ('41'),
-#     ('41.5'),
-#     ('42'),
-#     ('43'),
-#     ('44'),
-#     ('45'),
-#     )
-
-#     def get(self, request, *args, **kwargs):
-#         dict = request.GET
-#         print(dict)
-#         if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-#             productos = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
-#         elif dict['filtro'] != None:
-#                 productos = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
-#         else:
-#             productos = Calzado.objects.all().order_by('nombre')
-#         return render(request,self.template_name,{"productos":productos,"talles":talles})
-
-
-
-def calzado(request):
+class CalzadoLista(ListView):
+    model = Calzado
+    template_name = "crud_tienda/calzado.html"
     talles = (
     ('34.5'),
     ('35.5'),
@@ -77,60 +45,92 @@ def calzado(request):
     ('45'),
     )
 
-    if request.method == 'POST':
-        categoria = request.POST['categoria']
-        talle = request.POST['talle']
-    else:
+    def get(self, request, *args, **kwargs):
         dict = request.GET
-        print("--------------")
         print(dict)
-        print("--------------")
         if dict:
             if dict['filtro'] == 'M' or dict['filtro'] == 'H':
-                productos = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+                object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
             elif dict['filtro'] != None:
-                productos = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
-        else:
-            productos = Calzado.objects.all().order_by('nombre')
-    return render(request, "crud_tienda/calzado.html", {"productos": productos,"talles":talles})
+                object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
+            # else:
+            #     object_list = Calzado.objects.all().order_by('nombre')
+        return render(request,self.template_name,{"object_list":object_list,"talles":talles})
 
+class VestimentaLista(ListView):
+    model = Vestimenta
+    template_name = 'crud_tienda/vestimenta.html'
 
-def vestimenta(request):
-    if request.method == 'POST':
-        categoria = request.POST['categoria']
-        talle = request.POST['talle']
-        
-    else:
-        categoria = "Vestimenta"
-        productos = Vestimenta.objects.all().order_by('nombre')
-    return render(request, "crud_tienda/vestimenta.html", {"productos": productos, "categoria": categoria})
-
-
-class Accesorios(ListView):
+class AccesoriosLista(ListView):
     model = Accesorio
     template_name = 'crud_tienda/accesorios.html'
+
+class SuplementosLista(ListView):
+    model = Suplemento
+    template_name = 'crud_tienda/suplementos.html'
+
+
+# def calzado(request):
+#     talles = (
+#     ('34.5'),
+#     ('35.5'),
+#     ('36'),
+#     ('38'),
+#     ('39'),
+#     ('40'),
+#     ('41'),
+#     ('41.5'),
+#     ('42'),
+#     ('43'),
+#     ('44'),
+#     ('45'),
+#     )
+
+#     if request.method == 'POST':
+#         talle = request.POST['talle']
+#     else:
+#         dict = request.GET
+#         print("--------------")
+#         print(dict)
+#         print("--------------")
+#         if dict:
+#             if dict['filtro'] == 'M' or dict['filtro'] == 'H':
+#                 object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+#             elif dict['filtro'] != None:
+#                 object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
+#         else:
+#             object_list = Calzado.objects.all().order_by('nombre')
+#     return render(request, "crud_tienda/calzado.html", {"object_list": object_list,"talles":talles})
 
 class DetalleAccesorios(DetailView):
     model = Accesorio
     template_name = 'crud_tienda/detalle.html'
-    
+
+# def vestimenta(request):
+#     if request.method == 'POST':
+#         categoria = request.POST['categoria']
+#         talle = request.POST['talle']
+#     else:
+#         productos = Vestimenta.objects.all().order_by('nombre')
+#     return render(request, "crud_tienda/vestimenta.html", {"productos": productos})
+
 
 # def accesorios(request):
 #     if request.method == 'POST':
 #         categoria = request.POST['categoria']
-        
 #     else:
 #         productos = Accesorio.objects.all().order_by('nombre')
 #     return render(request, "crud_tienda/accesorios.html", {"productos": productos})
 
 
-def suplementos(request):
-    if request.method == 'POST':
-        categoria = request.POST['categoria']
-    else:
-        categoria = "Sumplementos"
-        productos = Suplemento.objects.all().order_by('nombre')
-    return render(request, "crud_tienda/suplementos.html", {"productos": productos, "categoria": categoria})
+# def suplementos(request):
+#     if request.method == 'POST':
+#         categoria = request.POST['categoria']
+#     else:
+#         categoria = "Sumplementos"
+#         productos = Suplemento.objects.all().order_by('nombre')
+#     return render(request, "crud_tienda/suplementos.html", {"productos": productos, "categoria": categoria})
+
 
 
 def contacto(request):
