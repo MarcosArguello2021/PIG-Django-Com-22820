@@ -101,11 +101,39 @@ class VestimentaLista(ListView):
 class AccesoriosLista(ListView):
     model = Accesorio
     template_name = 'crud_tienda/accesorios.html'
+    subcat_dict = pasar_a_dict(Accesorio.SUBCATEGORIA)
+
+    def get(self, request, *args, **kwargs):
+        dict = request.GET
+        print('-----------')
+        print(dict)
+        print('-----------')
+        if dict:
+            if dict['filtro'] in self.subcat_dict.keys():
+                object_list = Accesorio.objects.filter(subcategoria=str(dict['filtro']))
+        else:
+            object_list = Accesorio.objects.all().order_by('nombre')
+        return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
+
 
 
 class SuplementosLista(ListView):
     model = Suplemento
     template_name = 'crud_tienda/suplementos.html'
+    subcat_dict = pasar_a_dict(Suplemento.SUBCATEGORIA)
+
+    def get(self, request, *args, **kwargs):
+        dict = request.GET
+        print('-----------')
+        print(dict)
+        print('-----------')
+        if dict:
+            if dict['filtro'] in self.subcat_dict.keys():
+                object_list = Suplemento.objects.filter(subcategoria=str(dict['filtro']))
+        else:
+            object_list = Suplemento.objects.all().order_by('nombre')
+        return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
+
 
 class Detalle(DetailView):
     # https://stackoverflow.com/questions/59367543/django-multiple-modelstable-in-one-view

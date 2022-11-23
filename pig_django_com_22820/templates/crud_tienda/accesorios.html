@@ -13,12 +13,11 @@
                 Categoria &raquo;
             </a>
             <ul class="dropdown-menu dropdown-submenu">
+                {% for key, value in subcat_dict.items %}
                 <li>
-                    <a class="dropdown-item" href="{% url 'Accesorios' %}?filtro=MO">Moda</a>
+                    <a class="dropdown-item" href="{% url 'Accesorios' %}?filtro={{key}}">{{value}}</a>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="{% url 'Accesorios' %}?filtro=EN">Entrenamiento</a>
-                </li>
+                
             </ul>
         </li>
     </ul>
