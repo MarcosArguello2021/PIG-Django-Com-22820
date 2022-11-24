@@ -135,9 +135,20 @@ class SuplementosLista(ListView):
         return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
 
 
-class Detalle(DetailView):
-    # https://stackoverflow.com/questions/59367543/django-multiple-modelstable-in-one-view
+class AccesoriosDetalle(DetailView):
     model = Accesorio
+    template_name = 'crud_tienda/detalle.html'
+
+class CalzadoDetalle(DetailView):
+    model = Calzado
+    template_name = 'crud_tienda/detalle.html'
+
+class SuplementosDetalle(DetailView):
+    model = Suplemento
+    template_name = 'crud_tienda/detalle.html'
+
+class VestimentaDetalle(DetailView):
+    model = Vestimenta
     template_name = 'crud_tienda/detalle.html'
 
 

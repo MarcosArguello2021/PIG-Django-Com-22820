@@ -33,7 +33,7 @@ class Vestimenta(Item):
     ('PC', 'Pantalones & Calzas'),
     )
 
-    
+    categoria = "Vestimenta"
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
     sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
 
@@ -55,6 +55,7 @@ class Opciones_vestimenta(models.Model):
 
 class Calzado(Item):
 
+    categoria = "Calzado"
     sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
 
 class Opciones_calzado(models.Model):
@@ -87,6 +88,7 @@ class Suplemento(Item):
         ('VT', 'Vitaminas'),
     )
     
+    categoria = "Suplementos"
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
     stock = models.PositiveIntegerField()
 
@@ -99,5 +101,6 @@ class Accesorio(Item):
     ('EN', 'Entrenamiento'),
     )
 
+    categoria = "Accesorios"
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
     stock = models.PositiveIntegerField()

@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from crud_tienda.views import IndexView
 from . import views
-from .views import CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, Detalle
+from .views import CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, SuplementosDetalle, CalzadoDetalle, VestimentaDetalle
 from django.conf import settings
 
 urlpatterns = [
@@ -14,7 +14,10 @@ urlpatterns = [
     path('accesorios/<str:filtro>/', AccesoriosLista.as_view(),name='Accesorios-filtro'),
     path('suplementos/', SuplementosLista.as_view(),name='Suplementos'),
     path('suplementos/<str:filtro>/', SuplementosLista.as_view(),name='Suplementos-filtro'),
-    path('detalle/<int:pk>', Detalle.as_view(), name="Detalle"), 
+    path('detalle/<slug:Accesorios>/<int:pk>', AccesoriosDetalle.as_view(), name="Detalle"), 
+    path('detalle/<slug:Calzado>/<int:pk>', CalzadoDetalle.as_view(), name="Detalle"), 
+    path('detalle/<slug:Suplementos>/<int:pk>', SuplementosDetalle.as_view(), name="Detalle"), 
+    path('detalle/<slug:Vestimenta>/<int:pk>', VestimentaDetalle.as_view(), name="Detalle"), 
     path('contacto/',views.contacto, name="Contacto"),
     # path('vestimenta/', views.vestimenta,name='Vestimenta'),
     # path('calzado/', views.calzado,name='Calzado'),
