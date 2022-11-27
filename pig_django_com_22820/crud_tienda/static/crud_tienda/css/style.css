@@ -331,4 +331,23 @@
     text-align: right;
     color: beige;
 }
+.item .about {
+    text-align: left;
+    font-size: 1.2em;
+  }
+  
+  .itemListContainer {
+    text-align: center;
+  }
+  
+  .itemListContainer .title {
+    padding: 0.875em;
+  }
+  
+  .itemListContainer .containerList {
+    display: grid;
+    box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    text-align: center;
+  }
 /* ----------------------------------------- */
