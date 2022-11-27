@@ -51,6 +51,9 @@ class Opciones_vestimenta(models.Model):
     stock = models.PositiveIntegerField()
     item_fk = models.ForeignKey(Vestimenta, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return ''
+
 #Calzado y sus opciones
 
 class Calzado(Item):
@@ -78,6 +81,9 @@ class Opciones_calzado(models.Model):
     talle = models.CharField(max_length=4, choices=TALLES, blank=True, null=True)
     stock = models.PositiveIntegerField()
     calzado = models.ForeignKey(Calzado, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return ''
 
 #Suplementos y sus opciones
 
