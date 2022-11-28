@@ -49,7 +49,7 @@ class Opciones_vestimenta(models.Model):
 
     talle = models.CharField(max_length=2, choices=TALLES, blank=True, null=True)
     stock = models.PositiveIntegerField()
-    item_fk = models.ForeignKey(Vestimenta, on_delete=models.CASCADE)
+    vestimenta = models.ForeignKey(Vestimenta, on_delete=models.CASCADE)
 
     def __str__(self):
         return ''
