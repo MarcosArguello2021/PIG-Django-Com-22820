@@ -111,6 +111,7 @@ env.bak/
 venv.bak/
 **/pig_env
 email_settings.json
+email_settings2.json
 
 # Spyder project settings
 .spyderproject
