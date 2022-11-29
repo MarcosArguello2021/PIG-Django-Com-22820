@@ -1,7 +1,7 @@
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render, redirect
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
-from crud_tienda.forms import FormContacto
+from crud_tienda.forms import FormContacto, VestimentaForm, CalzadoForm
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
@@ -97,6 +97,12 @@ class VestimentaLista(ListView):
             object_list = Vestimenta.objects.all().order_by('nombre')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
+class VestimentaCreate(CreateView):
+    model = Vestimenta
+    form_class = VestimentaForm
+    template_name = 'administrador/crear_producto.html'
+
+
 
 class AccesoriosLista(ListView):
     model = Accesorio
@@ -150,6 +156,7 @@ class SuplementosDetalle(DetailView):
 class VestimentaDetalle(DetailView):
     model = Vestimenta
     template_name = 'crud_tienda/detalle.html'
+
 
 
 

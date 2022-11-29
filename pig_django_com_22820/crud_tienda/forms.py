@@ -31,9 +31,23 @@ class CalzadoForm(forms.ModelForm):
         model = Calzado
         second_model = Opciones_calzado
         fields = ('nombre','precio','foto','info') #,'sexo','talle','stock') #exclude = 'calzado'
+        widgets = {
+            'nombre': forms.Textarea(attrs={'class':'form-control'}),
+            'precio': forms.Textarea(attrs={'class':'form-control'}),
+            'foto': forms.Textarea(attrs={'class':'form-control'}),
+            'info': forms.Textarea(attrs={'class':'form-control'}),
+        }
+
 
 class VestimentaForm(forms.ModelForm):
 
     class Meta:
         model = Vestimenta
+        second_model = Opciones_vestimenta
         exclude = ('categoria',)
+        widgets = {
+            'nombre': forms.Textarea(attrs={'class':'form-control'}),
+            'precio': forms.Textarea(attrs={'class':'form-control'}),
+            'foto': forms.Textarea(attrs={'class':'form-control'}),
+            'info': forms.Textarea(attrs={'class':'form-control'}),
+        }
