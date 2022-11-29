@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from crud_tienda.views import IndexView
 from . import views
-from .views import CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, SuplementosDetalle, CalzadoDetalle, VestimentaDetalle
+from .views import CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, SuplementosDetalle, CalzadoDetalle, VestimentaDetalle, VestimentaCreate
 from django.conf import settings
 
 urlpatterns = [
@@ -19,12 +19,10 @@ urlpatterns = [
     path('Suplementos/<int:pk>', SuplementosDetalle.as_view(), name="Suplementos/"), 
     path('Vestimenta/<int:pk>', VestimentaDetalle.as_view(), name="Vestimenta/"), 
     path('contacto/',views.contacto, name="Contacto"),
-    # path('vestimenta/', views.vestimenta,name='Vestimenta'),
-    # path('calzado/', views.calzado,name='Calzado'),
-    # path('calzado/<str:filtro>/', views.calzado,name='Calzado-filtro'),
-    # re_path(r'^calzado/(?P<sexo>[a-z]{,1})$', views.calzado,name='calzado-sexo'),
-    # path('accesorios/', views.accesorios,name='Accesorios'),
-    # path('suplementos/', views.suplementos,name='Suplementos'),
+    # administrador
+    path('administrador/Vestimenta/create/', VestimentaCreate.as_view(), name="Crear-vestimenta"),
+    # path('administrador/Vestimenta/update/<int:pk>', VestimentaUpdate.as_view(), name="Actualizar-vestimenta"),
+    # path('administrador/Vestimenta/delete/<int:pk>', VestimentaDelete.as_view(), name="Borrar-vestimenta"),
 ]
 
 if settings.DEBUG:

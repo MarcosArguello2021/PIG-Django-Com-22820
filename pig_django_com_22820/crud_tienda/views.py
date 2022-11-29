@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
 from crud_tienda.forms import FormContacto, VestimentaForm, CalzadoForm
 from django.core.mail import EmailMessage
@@ -100,7 +101,20 @@ class VestimentaLista(ListView):
 class VestimentaCreate(CreateView):
     model = Vestimenta
     form_class = VestimentaForm
-    template_name = 'administrador/crear_producto.html'
+    template_name = 'administrador/crear_vestimenta.html'
+
+    # def get(self, request, *args, **kwargs):
+    #     # form = self.form_class()
+    #     return reverse_lazy(self.template_name,{'form_class':self.form_class}) #{'form_class':form})
+
+    # def post(self, request, *args, **kwargs):
+    #     form = self.form_class(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     return super().post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('Home')
 
 
 

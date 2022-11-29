@@ -43,11 +43,11 @@ class VestimentaForm(forms.ModelForm):
 
     class Meta:
         model = Vestimenta
-        second_model = Opciones_vestimenta
+        # second_model = Opciones_vestimenta
         exclude = ('categoria',)
         widgets = {
-            'nombre': forms.Textarea(attrs={'class':'form-control'}),
-            'precio': forms.Textarea(attrs={'class':'form-control'}),
-            'foto': forms.Textarea(attrs={'class':'form-control'}),
+            'nombre': forms.TextInput(attrs={'class':'form-control'}),
+            'precio': forms.NumberInput(attrs={'class':'form-control'}),
+            'foto': forms.ClearableFileInput(attrs={'class':'form-control'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
         }
