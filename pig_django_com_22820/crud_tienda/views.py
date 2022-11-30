@@ -100,6 +100,7 @@ class VestimentaLista(ListView):
 
 class VestimentaCreate(CreateView):
     model = Vestimenta
+    # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = VestimentaForm
     template_name = 'administrador/crear_vestimenta.html'
     success_url = reverse_lazy('Home')
@@ -125,6 +126,23 @@ class VestimentaCreate(CreateView):
 
     # def get_success_url(self):
     #     return reverse_lazy('Home')
+
+class VestimentaUpdate(UpdateView):
+    model = Vestimenta
+    # fields = ('nombre','precio','foto','info','subcategoria','sexo')
+    form_class = VestimentaForm
+    template_name = 'administrador/editar_vestimenta.html'
+    success_url = reverse_lazy('Home')
+# if request.method == 'POST':
+#     form = MyForm(request.POST, request.FILES)
+#     if form.is_valid():
+#         form.save()
+
+    # def post(self, request, *args, **kwargs):
+    #     vestimenta = self.model.objects.get(id=args)
+    #     form = self.form_class(request.POST, request.FILES, instance=vestimenta)
+    #     print(form)
+    #     return super().post(request, *args, **kwargs)
 
 
 

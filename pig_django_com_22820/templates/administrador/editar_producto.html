@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Crear Producto{% endblock %}
+{% block title %}Editar Producto{% endblock %}
 
 {% block content %}
 <form class="table table-dark" action="{% block url %}{% endblock %}" enctype="multipart/form-data" method="post">
@@ -8,8 +8,7 @@
 
         <!--Header-->
         <div class="text-center">
-            <h2 class="text-light mb-5 mt-4 font-weight-bold"><strong>Nuevo producto</strong></h2>
-            <p class="text-light mb-5 mt-4">Ingrese aquí un nuevo producto al sistema</p>
+            <h2 class="text-light mb-5 mt-4 font-weight-bold"><strong>Editar producto</strong></h2>
         </div>
 
         <!--Body-->
@@ -21,7 +20,7 @@
         <div class="row d-flex align-items-center">
             <!--Grid column-->
             <div class="text-center mb-3 col-md-12">
-                <button type="submit" class="btn btn-success btn-block btn-rounded z-depth-1 waves-effect waves-light">Cargar nuevo producto</button>
+                <button type="submit" class="btn btn-success btn-block btn-rounded z-depth-1 waves-effect waves-light">Guardar cambios</button>
             </div>
             <!--Grid column-->
         </div>

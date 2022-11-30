@@ -40,10 +40,10 @@ class CalzadoForm(forms.ModelForm):
 
 
 class VestimentaForm(forms.ModelForm):
+    opciones_vestimenta = forms.ModelChoiceField(queryset=Opciones_vestimenta.objects.all())
 
     class Meta:
         model = Vestimenta
-        # second_model = Opciones_vestimenta
         exclude = ('categoria',)
         widgets = {
             'nombre': forms.TextInput(attrs={'class':'form-control'}),
@@ -51,3 +51,4 @@ class VestimentaForm(forms.ModelForm):
             'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
         }
+    
