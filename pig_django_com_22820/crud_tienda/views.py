@@ -102,6 +102,16 @@ class VestimentaCreate(CreateView):
     model = Vestimenta
     form_class = VestimentaForm
     template_name = 'administrador/crear_vestimenta.html'
+    success_url = reverse_lazy('Home')
+
+    # def get_context_data(self, **kwargs):
+    #     data = super(VestimentaCreate, self).get_context_data(**kwargs)
+    #     if self.request.POST:
+    #         data['files'] = VestimentaForm(self.request.POST, self.request.FILES)
+    #     else:
+    #         data['files'] = VestimentaForm()
+    #     return data
+
 
     # def get(self, request, *args, **kwargs):
     #     # form = self.form_class()
@@ -113,8 +123,8 @@ class VestimentaCreate(CreateView):
     #         form.save()
     #     return super().post(request, *args, **kwargs)
 
-    def get_success_url(self):
-        return reverse_lazy('Home')
+    # def get_success_url(self):
+    #     return reverse_lazy('Home')
 
 
 

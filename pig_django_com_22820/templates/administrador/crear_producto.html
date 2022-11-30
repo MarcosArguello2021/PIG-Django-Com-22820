@@ -2,14 +2,14 @@
 {% block title %}Crear Producto{% endblock %}
 
 {% block content %}
-<form class="table table-dark" action="{% block url %}{% endblock %}" method="post">
+<form class="table table-dark" action="{% block url %}{% endblock %}" enctype=”multipart/form-data” method="post">
     {% csrf_token %}
     <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-2">
 
         <!--Header-->
         <div class="text-center">
-            <h2 class="text-dark mb-5 mt-4 font-weight-bold"><strong>Nuevo producto</strong></h2>
-            <p class="text-dark mb-5 mt-4">Ingrese aquí un nuevo producto al sistema</p>
+            <h2 class="text-light mb-5 mt-4 font-weight-bold"><strong>Nuevo producto</strong></h2>
+            <p class="text-light mb-5 mt-4">Ingrese aquí un nuevo producto al sistema</p>
         </div>
 
         <!--Body-->

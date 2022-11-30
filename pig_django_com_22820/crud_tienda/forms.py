@@ -48,6 +48,6 @@ class VestimentaForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class':'form-control'}),
             'precio': forms.NumberInput(attrs={'class':'form-control'}),
-            'foto': forms.ClearableFileInput(attrs={'class':'form-control'}),
+            'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
         }
