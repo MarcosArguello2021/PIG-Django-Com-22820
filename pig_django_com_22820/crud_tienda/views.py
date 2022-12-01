@@ -144,6 +144,11 @@ class VestimentaUpdate(UpdateView):
     #     print(form)
     #     return super().post(request, *args, **kwargs)
 
+class VestimentaDelete(DeleteView):
+    model = Vestimenta
+    template_name = 'administrador/vestimenta_confirm_delete.html'
+    success_url = reverse_lazy('Home')
+
 
 
 class AccesoriosLista(ListView):
