@@ -6,6 +6,10 @@ from crud_tienda.forms import FormContacto, VestimentaForm, CalzadoForm
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
+
 # Create your views here.
 
 def pasar_a_dict(tuplaChoices):
@@ -98,6 +102,8 @@ class VestimentaLista(ListView):
             object_list = Vestimenta.objects.all().order_by('nombre')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
+
+@method_decorator(staff_member_required, name='dispatch')
 class VestimentaCreate(CreateView):
     model = Vestimenta
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
@@ -127,6 +133,7 @@ class VestimentaCreate(CreateView):
     # def get_success_url(self):
     #     return reverse_lazy('Home')
 
+@method_decorator(staff_member_required, name='dispatch')
 class VestimentaUpdate(UpdateView):
     model = Vestimenta
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
@@ -144,6 +151,7 @@ class VestimentaUpdate(UpdateView):
     #     print(form)
     #     return super().post(request, *args, **kwargs)
 
+@method_decorator(staff_member_required, name='dispatch')
 class VestimentaDelete(DeleteView):
     model = Vestimenta
     template_name = 'administrador/vestimenta_confirm_delete.html'
