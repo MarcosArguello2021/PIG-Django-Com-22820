@@ -133,10 +133,10 @@ class VestimentaUpdate(UpdateView):
     form_class = VestimentaForm
     template_name = 'administrador/editar_vestimenta.html'
     success_url = reverse_lazy('Home')
-# if request.method == 'POST':
-#     form = MyForm(request.POST, request.FILES)
-#     if form.is_valid():
-#         form.save()
+    # if request.method == 'POST':
+    #     form = MyForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         form.save()
 
     # def post(self, request, *args, **kwargs):
     #     vestimenta = self.model.objects.get(id=args)
