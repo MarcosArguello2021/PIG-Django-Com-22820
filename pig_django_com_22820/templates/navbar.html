@@ -11,6 +11,12 @@
             <li class="nav-menu-item {% if 'Accesorios' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'Accesorios' %}">ACCESORIOS</a></li>
             <li class="nav-menu-item {% if 'Suplementos' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links" href="{% url 'Suplementos' %}">SUPLEMENTOS</a></li>
             <li class="nav-menu-item {% if 'Contacto' in request.path %}active{% endif %}"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'Contacto' %}">CONTACTO</a></li>
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item navbar-text"><a class="nav-menu-links btn-sm nav-links float-right my-3 mx-2" href="{% url 'login' %}">Acceder</a></li>
+            <li class="nav-item navbar-text"><a class="nav-menu-links btn-sm nav-links float-right my-3 mx-2" href="{% url 'signup' %}">Registro</a></li>
+            {% else %}
+            <li class="nav-item navbar-text"><a class="nav-menu-links btn-sm nav-links float-right my-3 mx-2" href="{% url 'logout' %}">Salir</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
