@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crud_tienda',
+    'django_bootstrap_breadcrumbs',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,6 @@ EMAIL_PORT = email_settings['EMAIL_PORT']
 EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
 
 USE_THOUSAND_SEPARATOR = True
+
+# bootstrap breadcrumbs
+BREADCRUMBS_TEMPLATE = "django_bootstrap_breadcrumbs/bootstrap4.html"
