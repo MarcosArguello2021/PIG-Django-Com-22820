@@ -22,19 +22,13 @@ def pasar_a_dict(tuplaChoices):
         dict = {}
         for i in range(len(valores)):
             dict[llaves[i]]=valores[i]
-        # print(dict)
         return dict
 
 class IndexView(TemplateView):
     template_name = "crud_tienda/index.html"
-    # model = Vestimenta
-    # context_object_name = 'productos' # este es el queryset, no el contexto. CUAL es el contexto?
-    # queryset = Vestimenta.objects.all().order_by('?')[:5]
-    # productos = Item.objects.all().order_by('?')[:10]
 
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        # context['vestimentas'] = self.queryset
         vestimentas = Vestimenta.objects.all().order_by('?')[:5]
         calzados = Calzado.objects.all().order_by('?')[:5]
         accesorios = Accesorio.objects.all().order_by('?')[:5]
@@ -57,8 +51,11 @@ class CalzadoLista(ListView):
         if dict:
             if dict['filtro'] in self.sexo.keys():
                 object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+                filtro = self.sexo[dict['filtro']]
             elif dict['filtro'] in self.talles.keys():
                 object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
+                filtro = self.talles[dict['filtro']]
+            return render(request, self.template_name, {"object_list": object_list, "filtro":filtro, "sexo":self.sexo, "talles": self.talles})
         else:
             object_list = Calzado.objects.all().order_by('nombre')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles})
@@ -71,21 +68,6 @@ class VestimentaLista(ListView):
     subcat_dict = pasar_a_dict(Vestimenta.SUBCATEGORIA)
     talles = pasar_a_dict(Opciones_vestimenta.TALLES)
 
-    # talles = []
-    # for tuplita in Opciones_vestimenta.TALLES:
-    #     talles.append(tuplita[0])
-
-    # subcat = []
-    # for subc in Vestimenta.SUBCATEGORIA:
-    #     subcat.append(subc[0])
-    # subcat_val = []
-    # for subc in Vestimenta.SUBCATEGORIA:
-    #     subcat_val.append(subc[1])
-    # subcat_dict = {}
-    # for i in range(len(subcat_val)):
-    #     subcat_dict[subcat[i]]=subcat_val[i]
-    # print(subcat_dict)
-
     def get(self, request, *args, **kwargs):
         dict = request.GET
         print('-----------')
@@ -94,10 +76,14 @@ class VestimentaLista(ListView):
         if dict:
             if dict['filtro'] in self.sexo.keys():
                 object_list = Vestimenta.objects.filter(sexo=dict['filtro']).order_by('nombre')
+                filtro = self.sexo[dict['filtro']]
             elif dict['filtro'] in self.subcat_dict.keys():
                 object_list = Vestimenta.objects.filter(subcategoria=str(dict['filtro']))
+                filtro = self.subcat_dict[dict['filtro']]
             elif dict['filtro'] in self.talles.keys():
                 object_list = Vestimenta.objects.filter(opciones_vestimenta__talle=str(dict['filtro']))
+                filtro = self.talles[dict['filtro']]
+            return render(request, self.template_name, {"object_list": object_list, "filtro":filtro,"sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
         else:
             object_list = Vestimenta.objects.all().order_by('nombre')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
@@ -110,6 +96,7 @@ class VestimentaCreate(CreateView):
     form_class = VestimentaForm
     template_name = 'administrador/crear_vestimenta.html'
     success_url = reverse_lazy('Home')
+    print(form_class)
 
     # def get_context_data(self, **kwargs):
     #     data = super(VestimentaCreate, self).get_context_data(**kwargs)
@@ -166,15 +153,17 @@ class AccesoriosLista(ListView):
 
     def get(self, request, *args, **kwargs):
         dict = request.GET
+        filtro = ""
         print('-----------')
         print(dict)
         print('-----------')
         if dict:
             if dict['filtro'] in self.subcat_dict.keys():
                 object_list = Accesorio.objects.filter(subcategoria=str(dict['filtro']))
+                filtro = self.subcat_dict[dict['filtro']]
         else:
             object_list = Accesorio.objects.all().order_by('nombre')
-        return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
+        return render(request, self.template_name, {"object_list": object_list,"filtro":filtro, "subcat_dict":self.subcat_dict})
 
 
 
@@ -185,15 +174,17 @@ class SuplementosLista(ListView):
 
     def get(self, request, *args, **kwargs):
         dict = request.GET
+        filtro = ""
         print('-----------')
         print(dict)
         print('-----------')
         if dict:
             if dict['filtro'] in self.subcat_dict.keys():
                 object_list = Suplemento.objects.filter(subcategoria=str(dict['filtro']))
+                filtro = self.subcat_dict[dict['filtro']]
         else:
             object_list = Suplemento.objects.all().order_by('nombre')
-        return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
+        return render(request, self.template_name, {"object_list": object_list,"filtro":filtro, "subcat_dict":self.subcat_dict})
 
 
 class AccesoriosDetalle(DetailView):

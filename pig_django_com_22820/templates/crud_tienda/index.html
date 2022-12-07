@@ -17,7 +17,7 @@
               </a>
               <h4>$ {{ p.precio|floatformat:2}}</h4>
 
-              <a href="{% url p.categoria|add:'/' p.id %}"><button class="btn btn-secondary">Ver Más</button></a>
+              <a href="{% url p.categoria|add:'-detalle' p.id %}"><button class="btn btn-secondary">Ver Más</button></a>
             </div>
             {% endfor %}
           </div>
