@@ -13,7 +13,7 @@ class Item(models.Model):
 
     nombre = models.CharField(max_length=50, verbose_name='Producto')
     precio = models.FloatField()
-    foto = models.ImageField(upload_to='productos', default='camo-pants.jpg')
+    foto = models.ImageField(upload_to='productos', null=True,blank=True)
     info = models.CharField(max_length=250)
 
     def __str__(self):
