@@ -1,4 +1,4 @@
-﻿# Proyecto Integrador Grupal en Django
+﻿# Proyecto Integrador Grupal en Django (Grupo 2)
 
 ## ¿Qué hay que entregar?:
 
