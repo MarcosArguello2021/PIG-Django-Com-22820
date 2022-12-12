@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -36,6 +37,9 @@ class Vestimenta(Item):
     categoria = "Vestimenta"
     subcategoria = models.CharField(max_length=2, choices=SUBCATEGORIA, blank=True, null=True)
     sexo = models.CharField(max_length=1, choices=SEXO, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse("mypage_detail", kwargs={"pk": self.pk})
 
 class Opciones_vestimenta(models.Model):
     
@@ -80,7 +84,7 @@ class Opciones_calzado(models.Model):
 
     talle = models.CharField(max_length=4, choices=TALLES, blank=True, null=True)
     stock = models.PositiveIntegerField()
-    calzado = models.ForeignKey(Calzado, on_delete=models.CASCADE)
+    calzado = models.ForeignKey(Calzado, null=False, blank=False, on_delete=models.CASCADE, related_name='calzado_relacionado')
 
     def __str__(self):
         return ''

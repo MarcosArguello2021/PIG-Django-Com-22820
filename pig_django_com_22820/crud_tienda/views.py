@@ -1,8 +1,11 @@
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
+
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
-from crud_tienda.forms import FormContacto, VestimentaForm, CalzadoForm
+from crud_tienda.forms import FormContacto, VestimentaForm, CalzadoForm, VestimentaOpcionesFormset
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
@@ -95,7 +98,7 @@ class VestimentaCreate(CreateView):
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = VestimentaForm
     template_name = 'administrador/crear_vestimenta.html'
-    success_url = reverse_lazy('Home')
+    success_url = f'{Vestimenta.objects.last().pk}'
     print(form_class)
 
     # def get_context_data(self, **kwargs):
@@ -119,6 +122,33 @@ class VestimentaCreate(CreateView):
 
     # def get_success_url(self):
     #     return reverse_lazy('Home')
+
+@method_decorator(staff_member_required, name='dispatch')
+class VestimentaCreateTalle(SingleObjectMixin, FormView):
+
+    model = Vestimenta
+    template_name = 'administrador/crear_vestimenta_opciones.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
+        return super().post(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        return VestimentaOpcionesFormset(**self.get_form_kwargs(), instance=self.object)
+
+    def form_valid(self, form):
+        form.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('crud_tienda:Home')
+    
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class VestimentaUpdate(UpdateView):
