@@ -40,7 +40,6 @@ class CalzadoForm(forms.ModelForm):
 
 
 class VestimentaForm(forms.ModelForm):
-    opciones_vestimenta = forms.ModelChoiceField(queryset=Opciones_vestimenta.objects.all())
 
     class Meta:
         model = Vestimenta
@@ -51,4 +50,20 @@ class VestimentaForm(forms.ModelForm):
             'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
         }
+
+class Opcion_vestimentaForm(forms.ModelForm):
+
+    class Meta:
+        model = Opciones_vestimenta
+        fields = ('talle','stock')
+        widgets = {
+            'talle': forms.Select(attrs={Opciones_vestimenta.TALLES}),
+            'stock': forms.NumberInput(attrs={'class':'form-control'}),
+        }
+
+VestimentaOpcionesFormset = forms.inlineformset_factory(
+    Vestimenta, 
+    Opciones_vestimenta, 
+    fields=('talle', 'stock'),
+)
     

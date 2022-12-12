@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from crud_tienda.views import IndexView
 from . import views
-from .views import CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, SuplementosDetalle, CalzadoDetalle, VestimentaDetalle, VestimentaCreate, VestimentaUpdate, VestimentaDelete
+from .views import CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, SuplementosDetalle, CalzadoDetalle, VestimentaDetalle, VestimentaCreate, VestimentaUpdate, VestimentaDelete, VestimentaCreateTalle
 from django.conf import settings
 
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
     path('contacto/',views.contacto, name="Contacto"),
     # administrador
     path('administrador/Vestimenta/create/', VestimentaCreate.as_view(), name="Crear-vestimenta"),
+    path('administrador/Vestimenta/create/<int:pk>', VestimentaCreateTalle.as_view(), name="Crear-vestimenta-opciones"),
     path('administrador/Vestimenta/update/<int:pk>', VestimentaUpdate.as_view(), name="Actualizar-vestimenta"),
     path('administrador/Vestimenta/delete/<int:pk>', VestimentaDelete.as_view(), name="Borrar-vestimenta"),
 ]
