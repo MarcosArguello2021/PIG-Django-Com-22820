@@ -154,3 +154,8 @@ EMAIL_PORT = email_settings['EMAIL_PORT']
 EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
 
 USE_THOUSAND_SEPARATOR = True
+
+#recuperar contraseña
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+#     EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
