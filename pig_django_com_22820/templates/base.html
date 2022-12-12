@@ -18,7 +18,7 @@
 <body>
     {% include 'navbar.html' %}
     <div class="container ruta-productos">
-        {% if request.resolver_match.url_name != "Home" and request.resolver_match.url_name != "Contacto" %}
+        {% if request.resolver_match.url_name != "Home" and request.resolver_match.url_name != "Contacto" and "accounts" not in request.resolver_match.route %}
         {% block breadcrumbs %}
              <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

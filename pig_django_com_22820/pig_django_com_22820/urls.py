@@ -21,8 +21,8 @@ from django.urls import path, include
 urlpatterns = [
     path('',include('crud_tienda.urls')),
     # registro_usuarios (auth)
-    # path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registro_usuarios.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     #admin x defecto
     path('admin/', admin.site.urls),
 ]
