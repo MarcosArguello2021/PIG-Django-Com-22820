@@ -12,7 +12,7 @@
             <li class="nav-menu-item"><a class="nav-menu-links nav-links {% if 'Accesorios' in request.resolver_match.url_name %}nav-menu-links_active{% endif %}" href="{% url 'Accesorios' %}">ACCESORIOS</a></li>
             <li class="nav-menu-item"><a class="nav-menu-links nav-links {% if 'Suplementos' in request.resolver_match.url_name %}nav-menu-links_active{% endif %}" href="{% url 'Suplementos' %}">SUPLEMENTOS</a></li>
             {% if request.user|has_group:"administrador" %}
-            <li class="nav-menu-item"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'Contacto' %}">ADMINISTRAR</a></li>
+            <li class="nav-menu-item"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'Administrador' %}">ADMINISTRAR</a></li>
             {% else %}
             <li class="nav-menu-item"><a class="nav-menu-links nav-links nav-menu-links_active" href="{% url 'Contacto' %}">CONTACTO</a></li>
             {% endif %}

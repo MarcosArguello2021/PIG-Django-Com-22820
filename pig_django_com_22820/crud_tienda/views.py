@@ -41,6 +41,33 @@ class IndexView(TemplateView):
         print(context)  # en produccion se va...
         return context
 
+class AdministradorView(TemplateView):
+    template_name = "administrador/administrador_menu.html"
+
+class AdministradorVestList(ListView):
+    model = Vestimenta
+    template_name = "administrador/admin_vest_list.html"
+    sexo = pasar_a_dict(SEXO)
+    subcat_dict = pasar_a_dict(Vestimenta.SUBCATEGORIA)
+    talles = pasar_a_dict(Opciones_vestimenta.TALLES)
+
+    def get(self, request, *args, **kwargs):
+        object_list = Vestimenta.objects.all().order_by('pk')
+        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
+
+
+class AdministradorCalzList(ListView):
+    model = Calzado
+    template_name = "administrador/admin_calz_list.html"
+
+class AdministradorAcceList(ListView):
+    model = Accesorio
+    template_name = "administrador/admin_acce_list.html"
+
+class AdministradorSuplList(ListView):
+    model = Suplemento
+    template_name = "administrador/admin_supl_list.html"
+
 
 class CalzadoLista(ListView):
     model = Calzado
