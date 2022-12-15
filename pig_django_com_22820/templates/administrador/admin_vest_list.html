@@ -4,7 +4,7 @@
 {% block content %}
 <div class="table table-dark text-white rgba-stylish-strong py-5 px-5 z-depth-2">
     <div class="text-center">
-        <h2 class="text-light mb-5 mt-4 font-weight-bold"><strong>Menu de vestimenta</strong></h2>
+        <h2 class="text-light mb-5 mt-4 font-weight-bold"><strong>Menu de vestimenta</strong><a class="btn btn-success float-right" href="{% url 'Crear-vestimenta' %}">Nuevo ingreso</a></h2>
         <table class="table table-dark">
             <thead class="thead-dark">
                 <tr>
@@ -26,15 +26,27 @@
                     <td>{{i.precio}}</td>
                     <td><img width="100" src="{% if i.foto %}{{i.foto.url}}{% endif %}" alt="foto {{i.nombre}}"></td>
                     <td>{{i.info}}</td>
-                    {% if i.subcategoria %}
-                    <td>{{subcat_dict.i.subcategoria}}NO FUNCA</td>
-                    {% else %}
-                    <td></td>
+                    <td>
+                    {% for key, value in subcat_dict.items %} 
+                    {% if i.subcategoria == key %}
+                    {{value}}
                     {% endif %}
-                    <td>{{i.sexo}}</td>
+                    {% endfor %}
+                    </td>
+                    {% if i.sexo %}
+                        {% for key, value in sexo.items %} 
+                        {% if i.sexo == key %}
+                        <td>{{value}}</td>
+                        {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <td>Unisex</td>
+                    {% endif %}
                     <td>
                         {% for talle in talles %}
-                            <P>{{i.talle}}</P><br>
+                            {% if i.talle == talle %}
+                                <P>{{i.talle}}</P>
+                            {% endif %}
                         {% endfor %}
                     </td>
                     <td>

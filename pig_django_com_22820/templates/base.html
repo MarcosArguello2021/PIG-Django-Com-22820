@@ -26,7 +26,7 @@
                     {% if "detalle" in request.resolver_match.url_name %}
                     <li class="breadcrumb-item"><a href="{% url object.categoria %}">{{object.categoria}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{object.nombre}}</li>
-                    {% elif "Administra" in request.resolver_match.url_name %}
+                    {% elif "administra" in request.get_full_path %}
                     <li class="breadcrumb-item"><a href="{% url 'Administrador' %}">Administrador</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{request.resolver_match.url_name}}</li>
                     {% else %}
@@ -39,7 +39,7 @@
                     {% endif %}
                 </ol>
              </nav>              
-             {% endblock %}
+        {% endblock %}
         {% endif %}
         <div class="container">
             {% block filters %}{% endblock %}

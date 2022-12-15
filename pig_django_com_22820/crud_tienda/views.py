@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
-from crud_tienda.forms import FormContacto, VestimentaForm, CalzadoForm, VestimentaOpcionesFormset
+from crud_tienda.forms import FormContacto, VestimentaForm, VestimentaOpcionesFormset, CalzadoForm, CalzadoOpcionesFormset, AccesorioForm, SuplementoForm
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
@@ -44,52 +44,7 @@ class IndexView(TemplateView):
 class AdministradorView(TemplateView):
     template_name = "administrador/administrador_menu.html"
 
-class AdministradorVestList(ListView):
-    model = Vestimenta
-    template_name = "administrador/admin_vest_list.html"
-    sexo = pasar_a_dict(SEXO)
-    subcat_dict = pasar_a_dict(Vestimenta.SUBCATEGORIA)
-    talles = pasar_a_dict(Opciones_vestimenta.TALLES)
-
-    def get(self, request, *args, **kwargs):
-        object_list = Vestimenta.objects.all().order_by('pk')
-        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
-
-
-class AdministradorCalzList(ListView):
-    model = Calzado
-    template_name = "administrador/admin_calz_list.html"
-
-class AdministradorAcceList(ListView):
-    model = Accesorio
-    template_name = "administrador/admin_acce_list.html"
-
-class AdministradorSuplList(ListView):
-    model = Suplemento
-    template_name = "administrador/admin_supl_list.html"
-
-
-class CalzadoLista(ListView):
-    model = Calzado
-    template_name = "crud_tienda/calzado.html"
-    sexo = pasar_a_dict(SEXO)
-    talles = pasar_a_dict(Opciones_calzado.TALLES)
-    
-    def get(self, request, *args, **kwargs):
-        dict = request.GET
-        print(dict)
-        if dict:
-            if dict['filtro'] in self.sexo.keys():
-                object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
-                filtro = self.sexo[dict['filtro']]
-            elif dict['filtro'] in self.talles.keys():
-                object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
-                filtro = self.talles[dict['filtro']]
-            return render(request, self.template_name, {"object_list": object_list, "filtro":filtro, "sexo":self.sexo, "talles": self.talles})
-        else:
-            object_list = Calzado.objects.all().order_by('nombre')
-        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles})
-
+# -------------------------------------------------------------------------------------
 
 class VestimentaLista(ListView):
     model = Vestimenta
@@ -116,6 +71,23 @@ class VestimentaLista(ListView):
             return render(request, self.template_name, {"object_list": object_list, "filtro":filtro,"sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
         else:
             object_list = Vestimenta.objects.all().order_by('nombre')
+        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
+
+
+class VestimentaDetalle(DetailView):
+    model = Vestimenta
+    template_name = 'crud_tienda/detalle.html'
+
+
+class AdministradorVestList(ListView):
+    model = Vestimenta
+    template_name = "administrador/admin_vest_list.html"
+    sexo = pasar_a_dict(SEXO)
+    subcat_dict = pasar_a_dict(Vestimenta.SUBCATEGORIA)
+    talles = pasar_a_dict(Opciones_vestimenta.TALLES)
+
+    def get(self, request, *args, **kwargs):
+        object_list = Vestimenta.objects.all().order_by('pk')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
 
@@ -183,7 +155,7 @@ class VestimentaUpdate(UpdateView):
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = VestimentaForm
     template_name = 'administrador/editar_vestimenta.html'
-    success_url = reverse_lazy('Home')
+    success_url = reverse_lazy('Administrar_vestimenta')
     # if request.method == 'POST':
     #     form = MyForm(request.POST, request.FILES)
     #     if form.is_valid():
@@ -198,10 +170,101 @@ class VestimentaUpdate(UpdateView):
 @method_decorator(staff_member_required, name='dispatch')
 class VestimentaDelete(DeleteView):
     model = Vestimenta
-    template_name = 'administrador/vestimenta_confirm_delete.html'
-    success_url = reverse_lazy('Home')
+    template_name = 'administrador/producto_confirm_delete.html'
+    success_url = reverse_lazy('Administrar_vestimenta')
+
+# -------------------------------------------------------------------------------------
+
+class CalzadoLista(ListView):
+    model = Calzado
+    template_name = "crud_tienda/calzado.html"
+    sexo = pasar_a_dict(SEXO)
+    talles = pasar_a_dict(Opciones_calzado.TALLES)
+    
+    def get(self, request, *args, **kwargs):
+        dict = request.GET
+        print(dict)
+        if dict:
+            if dict['filtro'] in self.sexo.keys():
+                object_list = Calzado.objects.filter(sexo=dict['filtro']).order_by('nombre')
+                filtro = self.sexo[dict['filtro']]
+            elif dict['filtro'] in self.talles.keys():
+                object_list = Calzado.objects.filter(opciones_calzado__talle=str(dict['filtro']))
+                filtro = self.talles[dict['filtro']]
+            return render(request, self.template_name, {"object_list": object_list, "filtro":filtro, "sexo":self.sexo, "talles": self.talles})
+        else:
+            object_list = Calzado.objects.all().order_by('nombre')
+        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles})
+
+class CalzadoDetalle(DetailView):
+    model = Calzado
+    template_name = 'crud_tienda/detalle.html'
 
 
+class AdministradorCalzList(ListView):
+    model = Calzado
+    template_name = "administrador/admin_calz_list.html"
+    sexo = pasar_a_dict(SEXO)
+    talles = pasar_a_dict(Opciones_calzado.TALLES)
+
+    def get(self, request, *args, **kwargs):
+        object_list = Calzado.objects.all().order_by('pk')
+        return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles})
+
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class CalzadoCreate(CreateView):
+    model = Calzado
+    # fields = ('nombre','precio','foto','info','sexo')
+    form_class = CalzadoForm
+    template_name = 'administrador/crear_calzado.html'
+    success_url = f'{Calzado.objects.last().pk}'
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class CalzadoCreateTalle(SingleObjectMixin, FormView):
+
+    model = Calzado
+    template_name = 'administrador/crear_calzado_opciones.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Calzado.objects.filter(pk=self.kwargs['pk']))
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Calzado.objects.filter(pk=self.kwargs['pk']))
+        return super().post(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        return CalzadoOpcionesFormset(**self.get_form_kwargs(), instance=self.object)
+
+    def form_valid(self, form):
+        form.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('crud_tienda:Home')
+    
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class CalzadoUpdate(UpdateView):
+    model = Calzado
+    # fields = ('nombre','precio','foto','info','sexo')
+    form_class = CalzadoForm
+    template_name = 'administrador/editar_calzado.html'
+    success_url = reverse_lazy('Administrar_calzado')
+
+@method_decorator(staff_member_required, name='dispatch')
+class CalzadoDelete(DeleteView):
+    model = Calzado
+    template_name = 'administrador/producto_confirm_delete.html'
+    success_url = reverse_lazy('Administrar_calzado')
+
+
+# -------------------------------------------------------------------------------------
 
 class AccesoriosLista(ListView):
     model = Accesorio
@@ -222,7 +285,44 @@ class AccesoriosLista(ListView):
             object_list = Accesorio.objects.all().order_by('nombre')
         return render(request, self.template_name, {"object_list": object_list,"filtro":filtro, "subcat_dict":self.subcat_dict})
 
+class AccesoriosDetalle(DetailView):
+    model = Accesorio
+    template_name = 'crud_tienda/detalle.html'
 
+
+class AdministradorAcceList(ListView):
+    model = Accesorio
+    template_name = "administrador/admin_acce_list.html"
+    subcat_dict = pasar_a_dict(Accesorio.SUBCATEGORIA)
+
+    def get(self, request, *args, **kwargs):
+        object_list = Accesorio.objects.all().order_by('pk')
+        return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AccesorioCreate(CreateView):
+    model = Accesorio
+    # fields = ('nombre','precio','foto','info','subcategoria','stock')
+    form_class = AccesorioForm
+    template_name = 'administrador/crear_accesorio.html'
+    success_url = reverse_lazy('Administrar_accesorios')
+
+@method_decorator(staff_member_required, name='dispatch')
+class AccesorioUpdate(UpdateView):
+    model = Accesorio
+    # fields = ('nombre','precio','foto','info','subcategoria','stock')
+    form_class = AccesorioForm
+    template_name = 'administrador/editar_accesorio.html'
+    success_url = reverse_lazy('Administrar_accesorios')
+
+@method_decorator(staff_member_required, name='dispatch')
+class AccesorioDelete(DeleteView):
+    model = Accesorio
+    template_name = 'administrador/producto_confirm_delete.html'
+    success_url = reverse_lazy('Administrar_accesorios')
+
+# -------------------------------------------------------------------------------------
 
 class SuplementosLista(ListView):
     model = Suplemento
@@ -243,22 +343,46 @@ class SuplementosLista(ListView):
             object_list = Suplemento.objects.all().order_by('nombre')
         return render(request, self.template_name, {"object_list": object_list,"filtro":filtro, "subcat_dict":self.subcat_dict})
 
-
-class AccesoriosDetalle(DetailView):
-    model = Accesorio
-    template_name = 'crud_tienda/detalle.html'
-
-class CalzadoDetalle(DetailView):
-    model = Calzado
-    template_name = 'crud_tienda/detalle.html'
-
 class SuplementosDetalle(DetailView):
     model = Suplemento
     template_name = 'crud_tienda/detalle.html'
 
-class VestimentaDetalle(DetailView):
-    model = Vestimenta
-    template_name = 'crud_tienda/detalle.html'
+
+class AdministradorSuplList(ListView):
+    model = Suplemento
+    template_name = "administrador/admin_supl_list.html"
+    subcat_dict = pasar_a_dict(Suplemento.SUBCATEGORIA)
+
+    def get(self, request, *args, **kwargs):
+        object_list = Suplemento.objects.all().order_by('pk')
+        return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class SuplementoCreate(CreateView):
+    model = Suplemento
+    # fields = ('nombre','precio','foto','info','subcategoria','stock')
+    form_class = SuplementoForm
+    template_name = 'administrador/crear_suplemento.html'
+    success_url = reverse_lazy('Administrar_suplementos')
+
+@method_decorator(staff_member_required, name='dispatch')
+class SuplementoUpdate(UpdateView):
+    model = Suplemento
+    # fields = ('nombre','precio','foto','info','subcategoria','stock')
+    form_class = SuplementoForm
+    template_name = 'administrador/editar_suplemento.html'
+    success_url = reverse_lazy('Administrar_suplementos')
+
+@method_decorator(staff_member_required, name='dispatch')
+class SuplementoDelete(DeleteView):
+    model = Suplemento
+    template_name = 'administrador/producto_confirm_delete.html'
+    success_url = reverse_lazy('Administrar_suplementos')
+
+# -------------------------------------------------------------------------------------
+
+
 
 
 

@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from crud_tienda.views import IndexView
 from . import views
-from .views import AdministradorView,AdministradorVestList,AdministradorCalzList,AdministradorAcceList,AdministradorSuplList, CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, SuplementosDetalle, CalzadoDetalle, VestimentaDetalle, VestimentaCreate, VestimentaUpdate, VestimentaDelete, VestimentaCreateTalle
+from .views import AdministradorView,AdministradorVestList,AdministradorCalzList,AdministradorAcceList,AdministradorSuplList, CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, AccesorioCreate,AccesorioUpdate, AccesorioDelete, SuplementosDetalle,SuplementoCreate, SuplementoUpdate, SuplementoDelete, CalzadoDetalle, CalzadoCreate, CalzadoCreateTalle, CalzadoUpdate, CalzadoDelete, VestimentaDetalle, VestimentaCreate, VestimentaUpdate, VestimentaDelete, VestimentaCreateTalle
 from django.conf import settings
 
 urlpatterns = [
@@ -20,15 +20,25 @@ urlpatterns = [
     path('vestimenta/<int:pk>', VestimentaDetalle.as_view(), name="Vestimenta-detalle"), 
     path('contacto/',views.contacto, name="Contacto"),
     # administrador
-    path('administrador/', AdministradorView.as_view(), name="Administrador"),
+    path('administrador/', AdministradorView.as_view(), name="Administrador"),    
     path('administrador/Vestimenta/', AdministradorVestList.as_view(), name="Administrar_vestimenta"),
     path('administrador/Vestimenta/create/', VestimentaCreate.as_view(), name="Crear-vestimenta"),
     path('administrador/Vestimenta/create/<int:pk>', VestimentaCreateTalle.as_view(), name="Crear-vestimenta-opciones"),
     path('administrador/Vestimenta/update/<int:pk>', VestimentaUpdate.as_view(), name="Actualizar-vestimenta"),
     path('administrador/Vestimenta/delete/<int:pk>', VestimentaDelete.as_view(), name="Borrar-vestimenta"),
     path('administrador/Calzado/', AdministradorCalzList.as_view(), name="Administrar_calzado"),
+    path('administrador/Calzado/create/', CalzadoCreate.as_view(), name="Crear-calzado"),
+    path('administrador/Calzado/create/<int:pk>', CalzadoCreateTalle.as_view(), name="Crear-calzado-opciones"),
+    path('administrador/Calzado/update/<int:pk>', CalzadoUpdate.as_view(), name="Actualizar-calzado"),
+    path('administrador/Calzado/delete/<int:pk>', CalzadoDelete.as_view(), name="Borrar-calzado"),
     path('administrador/Accesorios/', AdministradorAcceList.as_view(), name="Administrar_accesorios"),
+    path('administrador/Accesorios/create/', AccesorioCreate.as_view(), name="Crear-accesorio"),
+    path('administrador/Accesorios/update/<int:pk>', AccesorioUpdate.as_view(), name="Actualizar-accesorio"),
+    path('administrador/Accesorios/delete/<int:pk>', AccesorioDelete.as_view(), name="Borrar-accesorio"),
     path('administrador/Suplementos/', AdministradorSuplList.as_view(), name="Administrar_suplementos"),
+    path('administrador/Suplementos/create/', SuplementoCreate.as_view(), name="Crear-suplemento"),
+    path('administrador/Suplementos/update/<int:pk>', SuplementoUpdate.as_view(), name="Actualizar-suplemento"),
+    path('administrador/Suplementos/delete/<int:pk>', SuplementoDelete.as_view(), name="Borrar-suplemento"),
 
 ]
 
