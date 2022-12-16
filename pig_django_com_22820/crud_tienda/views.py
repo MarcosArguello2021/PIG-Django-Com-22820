@@ -97,8 +97,15 @@ class VestimentaCreate(CreateView):
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = VestimentaForm
     template_name = 'administrador/crear_vestimenta.html'
-    success_url = f'{Vestimenta.objects.last().pk}'
-    print(form_class)
+    data = f'{Vestimenta.objects.last().pk}'
+    success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
+    
+    # DE GABY
+    # model = Vestimenta
+    # # fields = ('nombre','precio','foto','info','subcategoria','sexo')
+    # form_class = VestimentaForm
+    # template_name = 'administrador/crear_vestimenta.html'
+    # success_url = f'{Vestimenta.objects.last().pk}'
 
     # def get_context_data(self, **kwargs):
     #     data = super(VestimentaCreate, self).get_context_data(**kwargs)
@@ -146,6 +153,28 @@ class VestimentaCreateTalle(SingleObjectMixin, FormView):
 
     def get_success_url(self):
         return reverse('crud_tienda:Home')
+    
+    # model = Vestimenta
+    # template_name = 'administrador/crear_vestimenta_opciones.html'
+
+    # def get(self, request, *args, **kwargs):
+    #     self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
+    #     return super().get(request, *args, **kwargs)
+
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
+    #     return super().post(request, *args, **kwargs)
+
+    # def get_form(self, form_class=None):
+    #     return VestimentaOpcionesFormset(**self.get_form_kwargs(), instance=self.object)
+
+    # def form_valid(self, form):
+    #     form.save()
+
+    #     return HttpResponseRedirect(self.get_success_url())
+
+    # def get_success_url(self):
+    #     return reverse('crud_tienda:Home')
     
 
 
