@@ -132,15 +132,16 @@ class VestimentaCreate(CreateView):
 @method_decorator(staff_member_required, name='dispatch')
 class VestimentaCreateTalle(SingleObjectMixin, FormView):
 
-    model = Vestimenta
+    model = Opciones_vestimenta
     template_name = 'administrador/crear_vestimenta_opciones.html'
+    success_url = reverse_lazy('Administrar_vestimenta')
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
+        self.object = self.get_object(queryset=Opciones_vestimenta.objects.filter(pk=self.kwargs['pk']))
         return super().post(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
