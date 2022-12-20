@@ -5,13 +5,15 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
-from crud_tienda.forms import FormContacto, VestimentaForm, VestimentaOpcionesFormset, CalzadoForm, CalzadoOpcionesFormset, AccesorioForm, SuplementoForm
+from crud_tienda.forms import FormContacto, VestimentaForm, Opcion_vestimentaForm, VestimentaOpcionesFormset, CalzadoForm, CalzadoOpcionesFormset, AccesorioForm, SuplementoForm
 from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
+
+from django.forms import inlineformset_factory
 
 # Create your views here.
 
@@ -97,9 +99,46 @@ class VestimentaCreate(CreateView):
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = VestimentaForm
     template_name = 'administrador/crear_vestimenta.html'
-    data = f'{Vestimenta.objects.last().pk}'
-    success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
+    # data = f'{Vestimenta.objects.last().pk}'
+    # success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
+    # success_url = f'{Vestimenta.objects.last().pk}'
+
+    VestimentaFormSet = inlineformset_factory(Vestimenta,Opciones_vestimenta, form=Opcion_vestimentaForm, extra=5)
+
+    def post(self, request, *args, **kwargs):
+        vestimenta_form = self.form_class(request.POST,request.FILES,prefix='item') #(VestimentaForm)
+        opciones_formset = self.VestimentaFormSet(request.POST,request.FILES,prefix='opciones')
+        if vestimenta_form.is_valid() and opciones_formset.is_valid():
+            vestimenta = vestimenta_form.save()  # guardo primero el producto para tenerlo en opciones
+            opciones_formset = self.VestimentaFormSet(request.POST,request.FILES,prefix='opciones',instance=vestimenta)  # uno el post de opciones con el producto creado
+            opciones_formset.is_valid()
+            opciones_formset.save()
+            return reverse_lazy('Administrar_vestimenta')
+        else:
+            return render(request, self.template_name, {
+                'message'           : "Verifica los datos",
+                'form'      : vestimenta_form,
+                'formset'  : opciones_formset,
+            })
     
+    def get(self, request, *args, **kwargs):
+        vestimenta_form = self.form_class(prefix='item') #(VestimentaForm)
+        opciones_formset = self.VestimentaFormSet(prefix='opciones')
+        return render(request, self.template_name, {
+            'form'      : vestimenta_form,
+            'opciones_formset'  : opciones_formset,
+        })
+    
+    # # ivan
+    # model = Vestimenta
+    # # fields = ('nombre','precio','foto','info','subcategoria','sexo')
+    # form_class = VestimentaForm
+    # template_name = 'administrador/crear_vestimenta.html'
+    # # data = f'{Vestimenta.objects.last().pk}'
+    # # success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
+    # success_url = f'{Vestimenta.objects.last().pk}'
+    
+
     # DE GABY
     # model = Vestimenta
     # # fields = ('nombre','precio','foto','info','subcategoria','sexo')
@@ -129,31 +168,18 @@ class VestimentaCreate(CreateView):
     # def get_success_url(self):
     #     return reverse_lazy('Home')
 
-@method_decorator(staff_member_required, name='dispatch')
-class VestimentaCreateTalle(SingleObjectMixin, FormView):
+# @method_decorator(staff_member_required, name='dispatch')
+# class VestimentaCreateTalle(SingleObjectMixin, FormView):
 
-    model = Opciones_vestimenta
-    template_name = 'administrador/crear_vestimenta_opciones.html'
-    success_url = reverse_lazy('Administrar_vestimenta')
+#     model = Opciones_vestimenta
+#     template_name = 'administrador/crear_vestimenta_opciones.html'
+#     success_url = reverse_lazy('Administrar_vestimenta')
 
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Vestimenta.objects.filter(pk=self.kwargs['pk']))
-        return super().get(request, *args, **kwargs)
+    # # ivan
+    # model = Opciones_vestimenta
+    # template_name = 'administrador/crear_vestimenta_opciones.html'
+    # success_url = reverse_lazy('Administrar_vestimenta')
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Opciones_vestimenta.objects.filter(pk=self.kwargs['pk']))
-        return super().post(request, *args, **kwargs)
-
-    def get_form(self, form_class=None):
-        return VestimentaOpcionesFormset(**self.get_form_kwargs(), instance=self.object)
-
-    def form_valid(self, form):
-        form.save()
-
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_success_url(self):
-        return reverse('crud_tienda:Home')
     
     # model = Vestimenta
     # template_name = 'administrador/crear_vestimenta_opciones.html'

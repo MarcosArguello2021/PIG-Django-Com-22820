@@ -2,7 +2,7 @@
 {% block title %}Crear Opciones{% endblock %}
 
 {% block content %}
-<form class="table table-dark" action="" enctype="multipart/form-data">
+<form class="table table-dark" action="{% url 'Crear-vestimenta-opciones' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-2">
 
