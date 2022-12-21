@@ -12,6 +12,8 @@ class VestimentaForm(forms.ModelForm):
             'precio': forms.NumberInput(attrs={'class':'form-control'}),
             'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
+            'subcategoria': forms.Select(attrs={'class':'form-control','choices': Vestimenta.SUBCATEGORIA}),
+            'sexo': forms.Select(attrs={'class':'form-control'}),
         }
 
 class Opcion_vestimentaForm(forms.ModelForm):
@@ -28,6 +30,10 @@ VestimentaOpcionesFormset = forms.inlineformset_factory(
     Vestimenta, 
     Opciones_vestimenta, 
     fields=('talle', 'stock'),
+    widgets = {
+            'talle': forms.Select(attrs={'class':'form-control','choices': Opciones_vestimenta.TALLES}),
+            'stock': forms.NumberInput(attrs={'class':'form-control'}),
+    },
     extra=5,
     max_num=5,
 )

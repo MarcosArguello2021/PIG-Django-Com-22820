@@ -16,18 +16,8 @@
             {{form.as_p}}
         </div>
 
-        <div class="md-form mb-5">
-            <table>
-                {{ formset.management_form }}
-                {% for form in formset %}
-                {{ form.id }}
-                {{ form }}
-                {% for hidden_field in form.hidden_fields %}
-                    {{ hidden_field.errors }}
-                    {{ hidden_field }}
-                {% endfor %}
-                {% endfor %}
-            </table>
+        <div class="md-form  mb-5">
+                {{ formset.as_p }}
         </div>
 
         <!--Grid row-->
