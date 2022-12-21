@@ -2,7 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect # a revisar y borrar
 
 from crud_tienda.models import Vestimenta, Accesorio, Calzado, Suplemento, Opciones_calzado, Opciones_vestimenta, SEXO
 from crud_tienda.forms import FormContacto, VestimentaForm, Opcion_vestimentaForm, VestimentaOpcionesFormset, CalzadoForm, CalzadoOpcionesFormset, AccesorioForm, SuplementoForm
@@ -13,7 +13,9 @@ from itertools import chain
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 
-from django.forms import inlineformset_factory
+# from django.forms import inlineformset_factory # a revisar y borrar
+from django.db import transaction
+
 
 # Create your views here.
 
@@ -95,40 +97,97 @@ class AdministradorVestList(ListView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class VestimentaCreate(CreateView):
-    model = Vestimenta
-    # fields = ('nombre','precio','foto','info','subcategoria','sexo')
-    form_class = VestimentaForm
+    # https://stackoverflow.com/questions/65596873/how-to-update-a-django-formset
     template_name = 'administrador/crear_vestimenta.html'
-    # data = f'{Vestimenta.objects.last().pk}'
-    # success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
-    # success_url = f'{Vestimenta.objects.last().pk}'
+    form_class = VestimentaForm
+    model = Vestimenta
 
-    VestimentaFormSet = inlineformset_factory(Vestimenta,Opciones_vestimenta, form=Opcion_vestimentaForm, extra=5)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    def post(self, request, *args, **kwargs):
-        vestimenta_form = self.form_class(request.POST,request.FILES,prefix='item') #(VestimentaForm)
-        opciones_formset = self.VestimentaFormSet(request.POST,request.FILES,prefix='opciones')
-        if vestimenta_form.is_valid() and opciones_formset.is_valid():
-            vestimenta = vestimenta_form.save()  # guardo primero el producto para tenerlo en opciones
-            opciones_formset = self.VestimentaFormSet(request.POST,request.FILES,prefix='opciones',instance=vestimenta)  # uno el post de opciones con el producto creado
-            opciones_formset.is_valid()
-            opciones_formset.save()
-            return reverse_lazy('Administrar_vestimenta')
+        if self.request.method == 'POST':
+            context['formset'] = VestimentaOpcionesFormset(self.request.POST, instance=self.object)
         else:
-            return render(request, self.template_name, {
-                'message'           : "Verifica los datos",
-                'form'      : vestimenta_form,
-                'formset'  : opciones_formset,
-            })
+            context['formset'] = VestimentaOpcionesFormset(instance=self.object)
+
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+
+        with transaction.atomic():
+            self.object = form.save()
+
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
+
+        return redirect('Administrar_vestimenta')
+
+
+    #----------------------------------------------------------------------------------
+    # # https://stackoverflow.com/questions/25321423/django-create-inline-forms-similar-to-django-admin
+    # tira este error:
+    #<tr><td colspan="2">
+    #   <ul class="errorlist nonfield">
+    #       <li>(Campo oculto TOTAL_FORMS) Este campo es obligatorio.</li>
+    #       <li>(Campo oculto INITIAL_FORMS) Este campo es obligatorio.</li>
+    #   </ul>
+    # <input type="hidden" name="opciones-TOTAL_FORMS" id="id_opciones-TOTAL_FORMS">
+    # <input type="hidden" name="opciones-INITIAL_FORMS" id="id_opciones-INITIAL_FORMS">
+    # <input type="hidden" name="opciones-MIN_NUM_FORMS" id="id_opciones-MIN_NUM_FORMS">
+    # <input type="hidden" name="opciones-MAX_NUM_FORMS" id="id_opciones-MAX_NUM_FORMS">
+    # </td></tr>
     
-    def get(self, request, *args, **kwargs):
-        vestimenta_form = self.form_class(prefix='item') #(VestimentaForm)
-        opciones_formset = self.VestimentaFormSet(prefix='opciones')
-        return render(request, self.template_name, {
-            'form'      : vestimenta_form,
-            'opciones_formset'  : opciones_formset,
-        })
+
+    # model = Vestimenta
+    # second_model = Opciones_vestimenta
+    # # fields = ('nombre','precio','foto','info','subcategoria','sexo')
+    # form_class = VestimentaForm
+    # template_name = 'administrador/crear_vestimenta.html'
+    # # data = f'{Vestimenta.objects.last().pk}'
+    # # success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
+    # # success_url = f'{Vestimenta.objects.last().pk}'
+
+    # VestimentaFormSet = inlineformset_factory(Vestimenta,Opciones_vestimenta, form=Opcion_vestimentaForm, extra=5)
+
+    # def post(self, request, *args, **kwargs):
+    #     vestimenta_form = self.form_class(request.POST,request.FILES,prefix='item') #(VestimentaForm)
+    #     # opciones_formset = self.VestimentaFormSet(request.POST,prefix='opciones')
+    #     # print(opciones_formset)
+    #     if vestimenta_form.is_valid(): #and opciones_formset.is_valid():
+    #         vestimenta = vestimenta_form.save()  # guardo primero el producto para tenerlo en opciones
+    #         opciones_formset = self.VestimentaFormSet(request.POST,prefix='opciones',instance=vestimenta)  # uno el post de opciones con el producto creado
+    #         print("-----------------------------------")
+    #         print(opciones_formset)
+    #         print("-----------------------------------")
+    #         if opciones_formset.is_valid():
+    #             # opciones_formset.is_valid()
+    #             opciones_formset.save()
+    #             return reverse_lazy('Administrar_vestimenta')
+    #         else:
+    #             return render(request, self.template_name, {
+    #             'message'           : "Verifica los datos",
+    #             'form'      : vestimenta_form,
+    #             'opciones_formset'  : opciones_formset,
+    #         })
+    #     else:
+    #         return render(request, self.template_name, {
+    #             'message'           : "Verifica los datos",
+    #             'form'      : vestimenta_form,
+    #             'opciones_formset'  : opciones_formset,
+    #         })
     
+    # def get(self, request, *args, **kwargs):
+    #     vestimenta_form = self.form_class(prefix='item') #(VestimentaForm)
+    #     opciones_formset = inlineformset_factory(Vestimenta,Opciones_vestimenta,fields=('talle','stock'), extra=5)
+    #     return render(request, self.template_name, {
+    #         'form' :  vestimenta_form,
+    #         'opciones_formset' : opciones_formset,
+    #     })
+    #----------------------------------------------------------------------------------
+
     # # ivan
     # model = Vestimenta
     # # fields = ('nombre','precio','foto','info','subcategoria','sexo')

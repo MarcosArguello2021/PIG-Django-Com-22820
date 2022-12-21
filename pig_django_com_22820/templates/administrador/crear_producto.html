@@ -11,20 +11,32 @@
             <h2 class="text-light mb-5 mt-4 font-weight-bold"><strong>Nuevo producto</strong></h2>
             <p class="text-light mb-5 mt-4">Ingrese aquí un nuevo producto al sistema</p>
         </div>
-
         <!--Body-->
         <div class="md-form mb-5">
             {{form.as_p}}
         </div>
+
         <div class="md-form mb-5">
-            {{formset}}
+            <table>
+                {{ formset.management_form }}
+                {% for form in formset %}
+                {{ form.id }}
+                {{ form }}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                {% endfor %}
+            </table>
         </div>
 
         <!--Grid row-->
         <div class="row d-flex align-items-center">
             <!--Grid column-->
             <div class="text-center mb-3 col-md-12">
-                <button type="submit" class="btn btn-success btn-block btn-rounded z-depth-1 waves-effect waves-light">Cargar nuevo producto</button>
+                <button type="submit"
+                    class="btn btn-success btn-block btn-rounded z-depth-1 waves-effect waves-light">Cargar nuevo
+                    producto</button>
             </div>
             <div class="text-center mb-3 col-md-12">
                 <a class="btn btn-secondary btn-block" href="{% block url2 %}{% endblock %}">Cancelar</a>
@@ -34,4 +46,4 @@
         <!--Grid row-->
     </div>
 
-{% endblock %}
+    {% endblock %}

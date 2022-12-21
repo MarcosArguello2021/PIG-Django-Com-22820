@@ -28,6 +28,8 @@ VestimentaOpcionesFormset = forms.inlineformset_factory(
     Vestimenta, 
     Opciones_vestimenta, 
     fields=('talle', 'stock'),
+    extra=5,
+    max_num=5,
 )
 
 #-----------------------------------------------------------------------------------------------------
