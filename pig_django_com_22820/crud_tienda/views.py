@@ -112,16 +112,16 @@ class VestimentaCreate(CreateView):
 
         return context
 
-    def form_valid(self, form):
+    def form_valid(self, form): # para validar y salvar en DB
         context = self.get_context_data()
         formset = context['formset']
 
-        with transaction.atomic():
-            self.object = form.save()
+        with transaction.atomic(): # si no guarda todo, no guarda nada
+            self.object = form.save() # primero guardo el producto
 
-            if formset.is_valid():
+            if formset.is_valid(): #valido opciones_vestimenta
                 formset.instance = self.object
-                formset.save()
+                formset.save() # luego guardo opciones_vestimenta
 
         return redirect('Administrar_vestimenta')
 
@@ -188,15 +188,6 @@ class VestimentaCreate(CreateView):
     #     })
     #----------------------------------------------------------------------------------
 
-    # # ivan
-    # model = Vestimenta
-    # # fields = ('nombre','precio','foto','info','subcategoria','sexo')
-    # form_class = VestimentaForm
-    # template_name = 'administrador/crear_vestimenta.html'
-    # # data = f'{Vestimenta.objects.last().pk}'
-    # # success_url = reverse_lazy('Crear-vestimenta-opciones', args=data) 
-    # success_url = f'{Vestimenta.objects.last().pk}'
-    
 
     # DE GABY
     # model = Vestimenta
@@ -271,6 +262,32 @@ class VestimentaUpdate(UpdateView):
     form_class = VestimentaForm
     template_name = 'administrador/editar_vestimenta.html'
     success_url = reverse_lazy('Administrar_vestimenta')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        if self.request.method == 'POST':
+            context['formset'] = VestimentaOpcionesFormset(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = VestimentaOpcionesFormset(instance=self.object)
+
+        return context
+
+
+    def form_valid(self, form): # para validar y salvar en DB
+        context = self.get_context_data()
+        formset = context['formset']
+
+        with transaction.atomic(): # si no guarda todo, no guarda nada
+            self.object = form.save() # primero guardo el producto
+
+            if formset.is_valid(): #valido opciones_vestimenta
+                formset.instance = self.object
+                formset.save() # luego guardo opciones_vestimenta
+
+    
+    
+    
     # if request.method == 'POST':
     #     form = MyForm(request.POST, request.FILES)
     #     if form.is_valid():
