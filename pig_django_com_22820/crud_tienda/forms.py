@@ -45,12 +45,13 @@ class CalzadoForm(forms.ModelForm):
     class Meta:
         model = Calzado
         second_model = Opciones_calzado
-        fields = ('nombre','precio','foto','info') #,'sexo','talle','stock') #exclude = 'calzado'
+        fields = ('nombre','precio','foto','info','sexo') #,'talle','stock') #exclude = 'calzado'
         widgets = {
             'nombre': forms.TextInput(attrs={'class':'form-control'}),
             'precio': forms.NumberInput(attrs={'class':'form-control'}),
             'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
+            'sexo': forms.Select(attrs={'class':'form-control'}),
         }
 
 class Opcion_calzadoForm(forms.ModelForm):
@@ -67,6 +68,12 @@ CalzadoOpcionesFormset = forms.inlineformset_factory(
     Calzado, 
     Opciones_calzado, 
     fields=('talle', 'stock'),
+    widgets = {
+            'talle': forms.Select(attrs={'class':'form-control','choices': Opciones_calzado.TALLES}),
+            'stock': forms.NumberInput(attrs={'class':'form-control'}),
+    },
+    extra=12,
+    max_num=12,
 )
 
 #-----------------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from crud_tienda.views import IndexView
 from . import views
-from .views import AdministradorView,AdministradorVestList,AdministradorCalzList,AdministradorAcceList,AdministradorSuplList, CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, AccesorioCreate,AccesorioUpdate, AccesorioDelete, SuplementosDetalle,SuplementoCreate, SuplementoUpdate, SuplementoDelete, CalzadoDetalle, CalzadoCreate, CalzadoCreateTalle, CalzadoUpdate, CalzadoDelete, VestimentaDetalle, VestimentaCreate, VestimentaUpdate, VestimentaDelete #, VestimentaCreateTalle
+from .views import AdministradorView,AdministradorVestList,AdministradorCalzList,AdministradorAcceList,AdministradorSuplList, CalzadoLista, AccesoriosLista, SuplementosLista, VestimentaLista, AccesoriosDetalle, AccesorioCreate,AccesorioUpdate, AccesorioDelete, SuplementosDetalle,SuplementoCreate, SuplementoUpdate, SuplementoDelete, CalzadoDetalle, CalzadoCreate, CalzadoUpdate, CalzadoDelete, VestimentaDetalle, VestimentaCreate, VestimentaUpdate, VestimentaDelete #, VestimentaCreateTalle
 from django.conf import settings
 
 urlpatterns = [
@@ -28,7 +28,6 @@ urlpatterns = [
     path('administrador/Vestimenta/delete/<int:pk>', VestimentaDelete.as_view(), name="Borrar-vestimenta"),
     path('administrador/Calzado/', AdministradorCalzList.as_view(), name="Administrar_calzado"),
     path('administrador/Calzado/create/', CalzadoCreate.as_view(), name="Crear-calzado"),
-    path('administrador/Calzado/create/<int:pk>', CalzadoCreateTalle.as_view(), name="Crear-calzado-opciones"),
     path('administrador/Calzado/update/<int:pk>', CalzadoUpdate.as_view(), name="Actualizar-calzado"),
     path('administrador/Calzado/delete/<int:pk>', CalzadoDelete.as_view(), name="Borrar-calzado"),
     path('administrador/Accesorios/', AdministradorAcceList.as_view(), name="Administrar_accesorios"),

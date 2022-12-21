@@ -261,17 +261,19 @@ class VestimentaUpdate(UpdateView):
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = VestimentaForm
     template_name = 'administrador/editar_vestimenta.html'
-    success_url = reverse_lazy('Administrar_vestimenta')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print(context)
         if self.request.method == 'POST':
-            context['formset'] = VestimentaOpcionesFormset(self.request.POST, instance=self.object)
+            context['formset'] = VestimentaOpcionesFormset(self.request.POST,self.request.FILES, instance=self.object)
         else:
             context['formset'] = VestimentaOpcionesFormset(instance=self.object)
 
         return context
+    
+    def get_object(self):
+        return super().get_object(self.request.GET.get('pk'))
 
 
     def form_valid(self, form): # para validar y salvar en DB
@@ -285,19 +287,9 @@ class VestimentaUpdate(UpdateView):
                 formset.instance = self.object
                 formset.save() # luego guardo opciones_vestimenta
 
+        return redirect('Administrar_vestimenta')
     
-    
-    
-    # if request.method == 'POST':
-    #     form = MyForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         form.save()
 
-    # def post(self, request, *args, **kwargs):
-    #     vestimenta = self.model.objects.get(id=args)
-    #     form = self.form_class(request.POST, request.FILES, instance=vestimenta)
-    #     print(form)
-    #     return super().post(request, *args, **kwargs)
 
 @method_decorator(staff_member_required, name='dispatch')
 class VestimentaDelete(DeleteView):
@@ -347,47 +339,68 @@ class AdministradorCalzList(ListView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class CalzadoCreate(CreateView):
-    model = Calzado
-    # fields = ('nombre','precio','foto','info','sexo')
-    form_class = CalzadoForm
     template_name = 'administrador/crear_calzado.html'
-    success_url = f'{Calzado.objects.last().pk}'
-
-
-@method_decorator(staff_member_required, name='dispatch')
-class CalzadoCreateTalle(SingleObjectMixin, FormView):
-
+    form_class = CalzadoForm
     model = Calzado
-    template_name = 'administrador/crear_calzado_opciones.html'
 
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Calzado.objects.filter(pk=self.kwargs['pk']))
-        return super().get(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Calzado.objects.filter(pk=self.kwargs['pk']))
-        return super().post(request, *args, **kwargs)
+        if self.request.method == 'POST':
+            context['formset'] = CalzadoOpcionesFormset(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = CalzadoOpcionesFormset(instance=self.object)
 
-    def get_form(self, form_class=None):
-        return CalzadoOpcionesFormset(**self.get_form_kwargs(), instance=self.object)
+        return context
 
-    def form_valid(self, form):
-        form.save()
+    def form_valid(self, form): # para validar y salvar en DB
+        context = self.get_context_data()
+        formset = context['formset']
 
-        return HttpResponseRedirect(self.get_success_url())
+        with transaction.atomic(): # si no guarda todo, no guarda nada
+            self.object = form.save() # primero guardo el producto
 
-    def get_success_url(self):
-        return reverse('crud_tienda:Home')
-    
+            if formset.is_valid(): #valido opciones_vestimenta
+                formset.instance = self.object
+                formset.save() # luego guardo opciones_vestimenta
+
+        return redirect('Administrar_calzado')
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class CalzadoUpdate(UpdateView):
     model = Calzado
-    # fields = ('nombre','precio','foto','info','sexo')
+    # fields = ('nombre','precio','foto','info','subcategoria','sexo')
     form_class = CalzadoForm
     template_name = 'administrador/editar_calzado.html'
-    success_url = reverse_lazy('Administrar_calzado')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        if self.request.method == 'POST':
+            context['formset'] = CalzadoOpcionesFormset(self.request.POST,self.request.FILES, instance=self.object)
+        else:
+            context['formset'] = CalzadoOpcionesFormset(instance=self.object)
+
+        return context
+    
+    def get_object(self):
+        return super().get_object(self.request.GET.get('pk'))
+
+
+    def form_valid(self, form): # para validar y salvar en DB
+        context = self.get_context_data()
+        formset = context['formset']
+
+        with transaction.atomic(): # si no guarda todo, no guarda nada
+            self.object = form.save() # primero guardo el producto
+
+            if formset.is_valid(): #valido opciones_vestimenta
+                formset.instance = self.object
+                formset.save() # luego guardo opciones_vestimenta
+
+        return redirect('Administrar_calzado')
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class CalzadoDelete(DeleteView):
