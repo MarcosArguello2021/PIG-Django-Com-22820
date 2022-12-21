@@ -20,7 +20,7 @@ class Opcion_vestimentaForm(forms.ModelForm):
         model = Opciones_vestimenta
         fields = ('talle','stock')
         widgets = {
-            'talle': forms.Select(attrs={Opciones_vestimenta.TALLES}),
+            'talle': forms.Select(attrs={'class':'form-control','choices': Opciones_vestimenta.TALLES}),
             'stock': forms.NumberInput(attrs={'class':'form-control'}),
         }
 
@@ -53,7 +53,7 @@ class Opcion_calzadoForm(forms.ModelForm):
         model = Opciones_calzado
         fields = ('talle','stock')
         widgets = {
-            'talle': forms.Select(attrs={Opciones_calzado.TALLES}),
+            'talle': forms.Select(attrs={'class':'form-control','choices': Opciones_calzado.TALLES}),
             'stock': forms.NumberInput(attrs={'class':'form-control'}),
         }
 
@@ -75,7 +75,7 @@ class AccesorioForm(forms.ModelForm):
             'precio': forms.NumberInput(attrs={'class':'form-control'}),
             'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
-            'subcategoria': forms.TextInput(attrs={'class':'form-control'}),
+            'subcategoria': forms.Select(attrs={'class':'form-control','choices': Accesorio.SUBCATEGORIA}),
             'stock': forms.NumberInput(attrs={'class':'form-control'}),
         }
     
@@ -91,7 +91,7 @@ class SuplementoForm(forms.ModelForm):
             'precio': forms.NumberInput(attrs={'class':'form-control'}),
             'foto': forms.FileInput(attrs={'class':'form-control','type':'file'}),
             'info': forms.Textarea(attrs={'class':'form-control'}),
-            'subcategoria': forms.TextInput(attrs={'class':'form-control'}),
+            'subcategoria': forms.Select(attrs={'class':'form-control','choices': Suplemento.SUBCATEGORIA}),
             'stock': forms.NumberInput(attrs={'class':'form-control'}),
         }
     
