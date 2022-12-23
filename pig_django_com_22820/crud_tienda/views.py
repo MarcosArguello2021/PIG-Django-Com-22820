@@ -10,9 +10,10 @@ from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
 
-from django.contrib.auth.models import User
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.decorators import method_decorator
+from django.contrib.admin.views.decorators import staff_member_required
 
 # from django.forms import inlineformset_factory # a revisar y borrar
 from django.db import transaction
@@ -32,6 +33,16 @@ def pasar_a_dict(tuplaChoices):
             dict[llaves[i]]=valores[i]
         return dict
 
+
+# def is_member(user):
+#     return user.groups.filter(name='administrador').exists()
+
+def is_member(self, request):
+        user = self.request.user
+        return user.groups.filter(name='administrador').exists()
+
+
+
 class IndexView(TemplateView):
     template_name = "crud_tienda/index.html"
 
@@ -48,6 +59,7 @@ class IndexView(TemplateView):
 
 class AdministradorView(TemplateView):
     template_name = "administrador/administrador_menu.html"
+
 
 # -------------------------------------------------------------------------------------
 
@@ -95,7 +107,8 @@ class AdministradorVestList(ListView):
         object_list = Vestimenta.objects.all().order_by('pk')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
-
+# @login_required
+# @method_decorator(user_passes_test(is_member), name='dispatch')
 @method_decorator(staff_member_required, name='dispatch')
 class VestimentaCreate(CreateView):
     # https://stackoverflow.com/questions/65596873/how-to-update-a-django-formset
@@ -103,6 +116,7 @@ class VestimentaCreate(CreateView):
     form_class = VestimentaForm
     model = Vestimenta
 
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
