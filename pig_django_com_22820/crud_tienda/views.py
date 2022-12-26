@@ -10,8 +10,8 @@ from django.core.mail import EmailMessage
 from pig_django_com_22820.settings import EMAIL_HOST_USER
 from itertools import chain
 
+from crud_tienda.functions import group_or_staff_member_required, pasar_a_dict # hecha por mi
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -20,29 +20,6 @@ from django.db import transaction
 
 
 # Create your views here.
-
-def pasar_a_dict(tuplaChoices):
-        llaves = []
-        for e in tuplaChoices:
-            llaves.append(e[0])
-        valores = []
-        for e in tuplaChoices:
-            valores.append(e[1])
-        dict = {}
-        for i in range(len(valores)):
-            dict[llaves[i]]=valores[i]
-        return dict
-
-
-# def is_member(user):
-#     return user.groups.filter(name='administrador').exists()
-
-def is_member(self, request):
-        user = self.request.user
-        return user.groups.filter(name='administrador').exists()
-
-
-
 class IndexView(TemplateView):
     template_name = "crud_tienda/index.html"
 
@@ -57,6 +34,7 @@ class IndexView(TemplateView):
         print(context)  # en produccion se va...
         return context
 
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AdministradorView(TemplateView):
     template_name = "administrador/administrador_menu.html"
 
@@ -95,7 +73,7 @@ class VestimentaDetalle(DetailView):
     model = Vestimenta
     template_name = 'crud_tienda/detalle.html'
 
-
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AdministradorVestList(ListView):
     model = Vestimenta
     template_name = "administrador/admin_vest_list.html"
@@ -107,11 +85,11 @@ class AdministradorVestList(ListView):
         object_list = Vestimenta.objects.all().order_by('pk')
         return render(request, self.template_name, {"object_list": object_list, "sexo":self.sexo, "talles": self.talles,"subcat_dict":self.subcat_dict})
 
-# @login_required
 # @method_decorator(user_passes_test(is_member), name='dispatch')
-@method_decorator(staff_member_required, name='dispatch')
+# @user_passes_test(lambda u: u.groups.filter(name='administrador').exists())
+# @login_required
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class VestimentaCreate(CreateView):
-    # https://stackoverflow.com/questions/65596873/how-to-update-a-django-formset
     template_name = 'administrador/crear_vestimenta.html'
     form_class = VestimentaForm
     model = Vestimenta
@@ -270,7 +248,8 @@ class VestimentaCreate(CreateView):
     
 
 
-@method_decorator(staff_member_required, name='dispatch')
+# @method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class VestimentaUpdate(UpdateView):
     model = Vestimenta
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
@@ -305,8 +284,7 @@ class VestimentaUpdate(UpdateView):
         return redirect('Administrar_vestimenta')
     
 
-
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class VestimentaDelete(DeleteView):
     model = Vestimenta
     template_name = 'administrador/producto_confirm_delete.html'
@@ -339,7 +317,7 @@ class CalzadoDetalle(DetailView):
     model = Calzado
     template_name = 'crud_tienda/detalle.html'
 
-
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AdministradorCalzList(ListView):
     model = Calzado
     template_name = "administrador/admin_calz_list.html"
@@ -352,7 +330,7 @@ class AdministradorCalzList(ListView):
 
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class CalzadoCreate(CreateView):
     template_name = 'administrador/crear_calzado.html'
     form_class = CalzadoForm
@@ -382,7 +360,7 @@ class CalzadoCreate(CreateView):
         return redirect('Administrar_calzado')
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class CalzadoUpdate(UpdateView):
     model = Calzado
     # fields = ('nombre','precio','foto','info','subcategoria','sexo')
@@ -417,7 +395,7 @@ class CalzadoUpdate(UpdateView):
         return redirect('Administrar_calzado')
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class CalzadoDelete(DeleteView):
     model = Calzado
     template_name = 'administrador/producto_confirm_delete.html'
@@ -450,6 +428,7 @@ class AccesoriosDetalle(DetailView):
     template_name = 'crud_tienda/detalle.html'
 
 
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AdministradorAcceList(ListView):
     model = Accesorio
     template_name = "administrador/admin_acce_list.html"
@@ -460,7 +439,7 @@ class AdministradorAcceList(ListView):
         return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AccesorioCreate(CreateView):
     model = Accesorio
     # fields = ('nombre','precio','foto','info','subcategoria','stock')
@@ -468,7 +447,7 @@ class AccesorioCreate(CreateView):
     template_name = 'administrador/crear_accesorio.html'
     success_url = reverse_lazy('Administrar_accesorios')
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AccesorioUpdate(UpdateView):
     model = Accesorio
     # fields = ('nombre','precio','foto','info','subcategoria','stock')
@@ -476,7 +455,7 @@ class AccesorioUpdate(UpdateView):
     template_name = 'administrador/editar_accesorio.html'
     success_url = reverse_lazy('Administrar_accesorios')
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AccesorioDelete(DeleteView):
     model = Accesorio
     template_name = 'administrador/producto_confirm_delete.html'
@@ -508,6 +487,7 @@ class SuplementosDetalle(DetailView):
     template_name = 'crud_tienda/detalle.html'
 
 
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class AdministradorSuplList(ListView):
     model = Suplemento
     template_name = "administrador/admin_supl_list.html"
@@ -518,7 +498,7 @@ class AdministradorSuplList(ListView):
         return render(request, self.template_name, {"object_list": object_list, "subcat_dict":self.subcat_dict})
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class SuplementoCreate(CreateView):
     model = Suplemento
     # fields = ('nombre','precio','foto','info','subcategoria','stock')
@@ -526,7 +506,7 @@ class SuplementoCreate(CreateView):
     template_name = 'administrador/crear_suplemento.html'
     success_url = reverse_lazy('Administrar_suplementos')
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class SuplementoUpdate(UpdateView):
     model = Suplemento
     # fields = ('nombre','precio','foto','info','subcategoria','stock')
@@ -534,7 +514,7 @@ class SuplementoUpdate(UpdateView):
     template_name = 'administrador/editar_suplemento.html'
     success_url = reverse_lazy('Administrar_suplementos')
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(group_or_staff_member_required, name='dispatch')
 class SuplementoDelete(DeleteView):
     model = Suplemento
     template_name = 'administrador/producto_confirm_delete.html'
